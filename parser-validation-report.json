@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-05-25T06:13:40.100Z",
+  "timestamp": "2025-05-25T06:27:29.602Z",
   "summary": {
     "total": 13,
     "successful": 11,
@@ -87,8 +87,8 @@
         "id": "iis-log",
         "name": "IIS Log",
         "description": "Microsoft IIS web server log format",
-        "regex": "/^(?<date>[^ ]+) (?<time>[^ ]+) (?<s_ip>[^ ]+) (?<cs_method>[^ ]+) (?<cs_uri_stem>[^ ]+) (?<cs_uri_query>[^ ]+) (?<s_port>[^ ]+) (?<cs_username>[^ ]+) (?<c_ip>[^ ]+) (?<cs_user_agent>[^ ]+) (?<sc_status>[^ ]+) (?<sc_substatus>[^ ]+) (?<sc_win32_status>[^ ]+) (?<time_taken>[^ ]+)$/",
-        "timeFormat": "%Y-%m-%d %H:%M:%S",
+        "regex": "/^(?<date>[^ ]+) (?<time>[^ ]+) (?<s_ip>[^ ]+) (?<cs_method>[^ ]+) (?<cs_uri_stem>[^ ]+) (?<cs_uri_query>[^ ]+) (?<s_port>[^ ]+) (?<cs_username>[^ ]+) (?<c_ip>[^ ]+) (?<cs_user_agent>\\S+) (?<sc_status>[^ ]+) (?<sc_substatus>[^ ]+) (?<sc_win32_status>[^ ]+) (?<time_taken>[^ ]+)$/",
+        "timeFormat": "",
         "testString": "2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0+(compatible;+MSIE+9.0;+Windows+NT+6.1) 200 0 0 1234"
       },
       "error": "No fields extracted",
@@ -147,7 +147,7 @@
           "id": "302013",
           "message": "Built inbound TCP connection 12345 for outside:192.168.1.100/1234 (192.168.1.100/1234) to inside:10.0.0.1/80 (10.0.0.1/80)"
         },
-        "parsed_time": "2025/05/25 06:13:34 +0000"
+        "parsed_time": "2025/05/25 06:27:24 +0000"
       }
     },
     {
@@ -156,7 +156,7 @@
         "id": "cisco-ios",
         "name": "Cisco IOS",
         "description": "Cisco IOS router/switch logs",
-        "regex": "/^<(?<pri>\\d+)>(?<seq>\\d+): (?<time>[^:]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$/",
+        "regex": "/^<(?<pri>\\d+)>(?<seq>\\d+): (?<time>[^:]+): %(?<facility>\\w+)-(?<severity>\\d+)-(?<mnemonic>\\w+): (?<message>.*)$/",
         "timeFormat": "%b %d %H:%M:%S",
         "testString": "<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.1.100)"
       },
@@ -219,7 +219,7 @@
         "parsed": {
           "log": "{\"timestamp\":\"2023-01-01T12:00:00Z\",\"level\":\"INFO\",\"message\":\"Application started\",\"service\":\"web-server\",\"request_id\":\"abc123\"}"
         },
-        "parsed_time": "2025/05/25 06:13:37 +0000"
+        "parsed_time": "2025/05/25 06:27:27 +0000"
       }
     },
     {

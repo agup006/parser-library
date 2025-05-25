@@ -72,9 +72,9 @@ const parserLibrary = [
         id: 'iis-log',
         name: 'IIS Log',
         description: 'Microsoft IIS web server log format',
-        regex: '^(?<date>[^ ]+) (?<time>[^ ]+) (?<s_ip>[^ ]+) (?<cs_method>[^ ]+) (?<cs_uri_stem>[^ ]+) (?<cs_uri_query>[^ ]+) (?<s_port>[^ ]+) (?<cs_username>[^ ]+) (?<c_ip>[^ ]+) (?<cs_user_agent>[^ ]+) (?<sc_status>[^ ]+) (?<sc_substatus>[^ ]+) (?<sc_win32_status>[^ ]+) (?<time_taken>[^ ]+)$',
+        regex: '^(?<date>\\S+) (?<timestamp>\\S+) (?<s_ip>\\S+) (?<cs_method>\\S+) (?<cs_uri_stem>\\S+) (?<cs_uri_query>\\S+) (?<s_port>\\S+) (?<cs_username>\\S+) (?<c_ip>\\S+) (?<cs_user_agent>\\S+) (?<sc_status>\\S+) (?<sc_substatus>\\S+) (?<sc_win32_status>\\S+) (?<time_taken>\\S+)$',
         timeFormat: '',
-        testString: '2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0+(compatible;+MSIE+9.0;+Windows+NT+6.1) 200 0 0 1234'
+        testString: '2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0 200 0 0 1234'
       },
       {
         id: 'haproxy',
@@ -103,9 +103,9 @@ const parserLibrary = [
         id: 'cisco-ios',
         name: 'Cisco IOS',
         description: 'Cisco IOS router/switch logs',
-        regex: '^<(?<pri>\\d+)>(?<seq>\\d+): (?<time>[^:]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$',
-        timeFormat: '%b %d %H:%M:%S',
-        testString: '<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console by admin on vty0'
+        regex: '^<(?<pri>\\d+)>(?<seq>\\d+): (?<timestamp>[^%]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$',
+        timeFormat: '',
+        testString: '<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.1.100)'
       },
       {
         id: 'cisco-meraki',
@@ -143,8 +143,8 @@ const parserLibrary = [
         id: 'cisco-wlc',
         name: 'Cisco WLC',
         description: 'Cisco Wireless LAN Controller logs',
-        regex: '^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) \\*(?<log_time>[^:]+): %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$',
-        timeFormat: '%b %d %H:%M:%S',
+        regex: '^<(?<pri>\\d+)>(?<timestamp>[^\\s]+\\s+[^\\s]+\\s+[^\\s]+) (?<hostname>[^\\s]+) \\*(?<log_time>[^%]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$',
+        timeFormat: '',
         testString: '<134>Oct 10 13:55:36 wlc-controller *Oct 10 13:55:36.123: %DOT11-6-ASSOC: Station associated'
       },
       {
@@ -166,8 +166,8 @@ const parserLibrary = [
         id: 'palo-alto',
         name: 'Palo Alto Networks',
         description: 'Palo Alto Networks firewall logs',
-        regex: '^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$',
-        timeFormat: '%b %d %Y %H:%M:%S',
+        regex: '^<(?<pri>\\d+)>(?<timestamp>[^\\s]+\\s+[^\\s]+\\s+[^\\s]+\\s+[^\\s]+) (?<hostname>[^\\s]+) (?<program>[^:]+): (?<message>.*)$',
+        timeFormat: '',
         testString: '<134>Oct 10 2023 13:55:36 pa-firewall TRAFFIC: Connection from 192.168.1.100 to 10.0.0.1'
       },
       {

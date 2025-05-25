@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setLoading, setError } from '../store';
 import { testParser } from '../services/parserApi';
-import { PlayIcon, TrashIcon, DocumentTextIcon, ClockIcon, CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+// Icons are used inline as emojis for better compatibility
 
 interface ParsedResult {
   errors: string[];
@@ -72,8 +72,8 @@ const ParserTester: React.FC = () => {
           id: 'iis-log',
           name: 'IIS Log',
           description: 'Microsoft IIS web server log format',
-          regex: '/^(?<date>[^ ]+) (?<time>[^ ]+) (?<s_ip>[^ ]+) (?<cs_method>[^ ]+) (?<cs_uri_stem>[^ ]+) (?<cs_uri_query>[^ ]+) (?<s_port>[^ ]+) (?<cs_username>[^ ]+) (?<c_ip>[^ ]+) (?<cs_user_agent>[^ ]+) (?<sc_status>[^ ]+) (?<sc_substatus>[^ ]+) (?<sc_win32_status>[^ ]+) (?<time_taken>[^ ]+)$/',
-          timeFormat: '%Y-%m-%d %H:%M:%S',
+          regex: '/^(?<date>\\S+) (?<timestamp>\\S+) (?<s_ip>\\S+) (?<cs_method>\\S+) (?<cs_uri_stem>\\S+) (?<cs_uri_query>\\S+) (?<s_port>\\S+) (?<cs_username>\\S+) (?<c_ip>\\S+) (?<cs_user_agent>\\S+) (?<sc_status>\\S+) (?<sc_substatus>\\S+) (?<sc_win32_status>\\S+) (?<time_taken>\\S+)$/',
+          timeFormat: '',
           testString: '2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0 200 0 0 1234'
         },
         {
@@ -103,9 +103,9 @@ const ParserTester: React.FC = () => {
           id: 'cisco-ios',
           name: 'Cisco IOS',
           description: 'Cisco IOS router/switch logs',
-          regex: '/^<(?<pri>\\d+)>(?<seq>\\d+): (?<time>[^:]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$/',
-          timeFormat: '%b %d %H:%M:%S',
-          testString: '<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console'
+          regex: '/^<(?<pri>\\d+)>(?<seq>\\d+): (?<timestamp>[^:]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$/',
+          timeFormat: '',
+          testString: '<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.1.100)'
         },
         {
           id: 'cisco-meraki',

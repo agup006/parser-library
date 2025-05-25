@@ -1,9 +1,697 @@
 {
+  "timestamp": "2025-05-25T16:04:16.964Z",
   "summary": {
-    "total": 0,
-    "successful": 0,
+    "total": 30,
+    "successful": 30,
     "failed": 0,
-    "successRate": null
+    "successRate": "100.0"
   },
-  "results": []
+  "results": [
+    {
+      "success": true,
+      "pattern": {
+        "id": "apache-common",
+        "name": "Apache Common Log",
+        "description": "Standard Apache access log format",
+        "regex": "^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \\[(?<time>[^\\]]*)\\] \"(?<method>\\S+)(?: +(?<path>[^ ]*) +\\S*)?\" (?<code>[^ ]*) (?<size>[^ ]*)$",
+        "timeFormat": "%d/%b/%Y:%H:%M:%S %z",
+        "testString": "127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] \"GET /apache_pb.gif HTTP/1.0\" 200 2326"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "host": "127.0.0.1",
+          "user": "frank",
+          "method": "GET",
+          "path": "/apache_pb.gif",
+          "code": "200",
+          "size": "2326"
+        },
+        "parsed_time": "2000/10/10 20:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "apache-combined",
+        "name": "Apache Combined Log",
+        "description": "Apache access log with referer and user agent",
+        "regex": "^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \\[(?<time>[^\\]]*)\\] \"(?<method>\\S+)(?: +(?<path>[^ ]*) +\\S*)?\" (?<code>[^ ]*) (?<size>[^ ]*)(?: \"(?<referer>[^\"]*)\" \"(?<agent>.*)\")?$",
+        "timeFormat": "%d/%b/%Y:%H:%M:%S %z",
+        "testString": "127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] \"GET /apache_pb.gif HTTP/1.0\" 200 2326 \"http://www.example.com/start.html\" \"Mozilla/4.08 [en] (Win98; I ;Nav)\""
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "host": "127.0.0.1",
+          "user": "frank",
+          "method": "GET",
+          "path": "/apache_pb.gif",
+          "code": "200",
+          "size": "2326",
+          "referer": "http://www.example.com/start.html",
+          "agent": "Mozilla/4.08 [en] (Win98; I ;Nav)"
+        },
+        "parsed_time": "2000/10/10 20:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "nginx-access",
+        "name": "Nginx Access Log",
+        "description": "Standard Nginx access log format",
+        "regex": "^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \\[(?<time>[^\\]]*)\\] \"(?<method>\\S+)(?: +(?<path>[^\"]*?)(?: +\\S*)?)?\" (?<code>[^ ]*) (?<size>[^ ]*)(?: \"(?<referer>[^\"]*)\" \"(?<agent>[^\"]*)\")?$",
+        "timeFormat": "%d/%b/%Y:%H:%M:%S %z",
+        "testString": "192.168.1.1 example.com user [10/Oct/2000:13:55:36 -0700] \"GET /index.html HTTP/1.1\" 200 1234 \"http://example.com\" \"Mozilla/5.0\""
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "remote": "192.168.1.1",
+          "host": "example.com",
+          "user": "user",
+          "method": "GET",
+          "path": "/index.html",
+          "code": "200",
+          "size": "1234",
+          "referer": "http://example.com",
+          "agent": "Mozilla/5.0"
+        },
+        "parsed_time": "2000/10/10 20:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "iis-log",
+        "name": "IIS Log",
+        "description": "Microsoft IIS web server log format",
+        "regex": "^(?<date>\\S+) (?<timestamp>\\S+) (?<s_ip>\\S+) (?<cs_method>\\S+) (?<cs_uri_stem>\\S+) (?<cs_uri_query>\\S+) (?<s_port>\\S+) (?<cs_username>\\S+) (?<c_ip>\\S+) (?<cs_user_agent>\\S+) (?<sc_status>\\S+) (?<sc_substatus>\\S+) (?<sc_win32_status>\\S+) (?<time_taken>\\S+)$",
+        "timeFormat": "",
+        "testString": "2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0 200 0 0 1234"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "date": "2023-01-01",
+          "timestamp": "12:00:00",
+          "s_ip": "192.168.1.1",
+          "cs_method": "GET",
+          "cs_uri_stem": "/default.htm",
+          "cs_uri_query": "-",
+          "s_port": "80",
+          "cs_username": "-",
+          "c_ip": "10.0.0.1",
+          "cs_user_agent": "Mozilla/5.0",
+          "sc_status": "200",
+          "sc_substatus": "0",
+          "sc_win32_status": "0",
+          "time_taken": "1234"
+        },
+        "parsed_time": "2025/05/25 16:03:44 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "haproxy",
+        "name": "HAProxy",
+        "description": "HAProxy load balancer log format",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<client_ip>[^:]+):(?<client_port>\\d+) \\[(?<accept_date>[^\\]]+)\\] (?<frontend_name>[^ ]+) (?<backend_name>[^ ]+) (?<status_code>\\d+) (?<bytes_read>\\d+) (?<request>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<134>Oct 10 13:55:36 loadbalancer haproxy[1234]: 192.168.1.100:54321 [10/Oct/2000:13:55:36.123] frontend backend 200 1234 \"GET /api/health HTTP/1.1\""
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "loadbalancer",
+          "process": "haproxy",
+          "pid": "1234",
+          "client_ip": "192.168.1.100",
+          "client_port": "54321",
+          "accept_date": "10/Oct/2000:13:55:36.123",
+          "frontend_name": "frontend",
+          "backend_name": "backend",
+          "status_code": "200",
+          "bytes_read": "1234",
+          "request": "\"GET /api/health HTTP/1.1\""
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "cisco-asa",
+        "name": "Cisco ASA",
+        "description": "Cisco Adaptive Security Appliance logs",
+        "regex": "^%ASA-(?<pri>\\d+)-(?<id>\\d+):\\s+(?<message>.*)$",
+        "timeFormat": "%b %d %Y %H:%M:%S",
+        "testString": "%ASA-6-302013: Built inbound TCP connection 12345 for outside:192.168.1.100/1234 (192.168.1.100/1234) to inside:10.0.0.1/80 (10.0.0.1/80)"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "6",
+          "id": "302013",
+          "message": "Built inbound TCP connection 12345 for outside:192.168.1.100/1234 (192.168.1.100/1234) to inside:10.0.0.1/80 (10.0.0.1/80)"
+        },
+        "parsed_time": "2025/05/25 16:03:47 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "cisco-ios",
+        "name": "Cisco IOS",
+        "description": "Cisco IOS router/switch logs",
+        "regex": "^<(?<pri>\\d+)>(?<seq>\\d+): (?<timestamp>[^%]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$",
+        "timeFormat": "",
+        "testString": "<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.1.100)"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "189",
+          "seq": "123",
+          "timestamp": "Oct 10 13:55:36",
+          "facility": "SYS",
+          "severity": "5",
+          "mnemonic": "CONFIG_I",
+          "message": "Configured from console by admin on vty0 (192.168.1.100)"
+        },
+        "parsed_time": "2025/05/25 16:03:48 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "cisco-meraki",
+        "name": "Cisco Meraki",
+        "description": "Cisco Meraki cloud-managed device logs",
+        "regex": "^<(?<pri>\\d+)>(?<version>\\d+) (?<timestamp>[^ ]+) (?<device_name>[^ ]+) (?<type>[^ ]+) (?<event_type>[^ ]+) (?<message>.*)$",
+        "timeFormat": "%Y-%m-%dT%H:%M:%SZ",
+        "testString": "<134>1 2023-01-01T12:00:00Z MX84 urls src=192.168.1.100 dst=example.com request: GET example.com/"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "version": "1",
+          "timestamp": "2023-01-01T12:00:00Z",
+          "device_name": "MX84",
+          "type": "urls",
+          "event_type": "src=192.168.1.100",
+          "message": "dst=example.com request: GET example.com/"
+        },
+        "parsed_time": "2025/05/25 16:03:49 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "cisco-firepower",
+        "name": "Cisco Firepower",
+        "description": "Cisco Firepower Threat Defense logs",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<134>Oct 10 13:55:36 firepower SFIMS: [Primary Detection Engine (a8c4e3b2-1234-5678-9abc-def012345678)] Connection Type: Start, User: N/A"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "firepower",
+          "program": "SFIMS",
+          "message": "[Primary Detection Engine (a8c4e3b2-1234-5678-9abc-def012345678)] Connection Type: Start, User: N/A"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "cisco-ise",
+        "name": "Cisco ISE",
+        "description": "Cisco Identity Services Engine logs",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^ ]+) (?<message>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<134>Oct 10 13:55:36 ise-server CISE_RADIUS_Accounting 0000123456 1 0 2023-01-01 12:00:00.123 +00:00 0000123456 5200 NOTICE"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "ise-server",
+          "program": "CISE_RADIUS_Accounting",
+          "message": "0000123456 1 0 2023-01-01 12:00:00.123 +00:00 0000123456 5200 NOTICE"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "cisco-nexus",
+        "name": "Cisco Nexus",
+        "description": "Cisco Nexus data center switch logs",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<189>Oct 10 13:55:36 nexus-switch %ETHPORT-5-IF_UP: Interface Ethernet1/1 is up"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "189",
+          "hostname": "nexus-switch",
+          "facility": "ETHPORT",
+          "severity": "5",
+          "mnemonic": "IF_UP",
+          "message": "Interface Ethernet1/1 is up"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "cisco-wlc",
+        "name": "Cisco WLC",
+        "description": "Cisco Wireless LAN Controller logs",
+        "regex": "^<(?<pri>\\d+)>(?<timestamp>[^\\s]+\\s+[^\\s]+\\s+[^\\s]+) (?<hostname>[^\\s]+) \\*(?<log_time>[^%]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$",
+        "timeFormat": "",
+        "testString": "<134>Oct 10 13:55:36 wlc-controller *Oct 10 13:55:36.123: %DOT11-6-ASSOC: Station associated"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "timestamp": "Oct 10 13:55:36",
+          "hostname": "wlc-controller",
+          "log_time": "Oct 10 13:55:36.123",
+          "facility": "DOT11",
+          "severity": "6",
+          "mnemonic": "ASSOC",
+          "message": "Station associated"
+        },
+        "parsed_time": "2025/05/25 16:03:54 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "cisco-umbrella",
+        "name": "Cisco Umbrella",
+        "description": "Cisco Umbrella DNS security logs",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<134>Oct 10 13:55:36 umbrella CEF:0|Cisco|Umbrella|1.0|1|DNS Request Allowed|3|src=192.168.1.100 dst=8.8.8.8 dhost=example.com"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "umbrella",
+          "version": "0",
+          "vendor": "Cisco",
+          "product": "Umbrella",
+          "product_version": "1.0",
+          "event_id": "1",
+          "event_name": "DNS Request Allowed",
+          "severity": "3",
+          "extension": "src=192.168.1.100 dst=8.8.8.8 dhost=example.com"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "palo-alto",
+        "name": "Palo Alto Networks",
+        "description": "Palo Alto Networks firewall logs",
+        "regex": "^<(?<pri>\\d+)>(?<timestamp>[^\\s]+\\s+[^\\s]+\\s+[^\\s]+\\s+[^\\s]+) (?<hostname>[^\\s]+) (?<program>[^:]+): (?<message>.*)$",
+        "timeFormat": "",
+        "testString": "<134>Oct 10 2023 13:55:36 pa-firewall TRAFFIC: Connection from 192.168.1.100 to 10.0.0.1"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "timestamp": "Oct 10 2023 13:55:36",
+          "hostname": "pa-firewall",
+          "program": "TRAFFIC",
+          "message": "Connection from 192.168.1.100 to 10.0.0.1"
+        },
+        "parsed_time": "2025/05/25 16:03:56 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "fortinet-fortigate",
+        "name": "Fortinet FortiGate",
+        "description": "Fortinet FortiGate firewall logs",
+        "regex": "^date=(?<fdate>[^ ]+)\\s+time=(?<ftime>[^ ]+)\\s+logid=\"(?<logid>[^\"]+)\"\\s+type=\"(?<type>[^\"]+)\"\\s+subtype=\"(?<subtype>[^\"]+)\"\\s+(?<message>.*)$",
+        "timeFormat": "%Y-%m-%d %H:%M:%S",
+        "testString": "date=2023-01-01 time=12:00:00 logid=\"0000000013\" type=\"traffic\" subtype=\"forward\" level=\"notice\" vd=\"root\" eventtime=1672574400 srcip=192.168.1.100 srcport=12345 srcintf=\"port1\" dstip=8.8.8.8 dstport=53 dstintf=\"port2\" policyid=1 sessionid=123456 proto=17 action=\"accept\" policytype=\"policy\" service=\"DNS\" dstcountry=\"United States\" srccountry=\"Reserved\" trandisp=\"snat\" transip=203.0.113.1 transport=12345 duration=1 sentbyte=64 rcvdbyte=80"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "fdate": "2023-01-01",
+          "ftime": "12:00:00",
+          "logid": "0000000013",
+          "type": "traffic",
+          "subtype": "forward",
+          "message": "level=\"notice\" vd=\"root\" eventtime=1672574400 srcip=192.168.1.100 srcport=12345 srcintf=\"port1\" dstip=8.8.8.8 dstport=53 dstintf=\"port2\" policyid=1 sessionid=123456 proto=17 action=\"accept\" policytype=\"policy\" service=\"DNS\" dstcountry=\"United States\" srccountry=\"Reserved\" trandisp=\"snat\" transip=203.0.113.1 transport=12345 duration=1 sentbyte=64 rcvdbyte=80"
+        },
+        "parsed_time": "2025/05/25 16:03:58 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "checkpoint",
+        "name": "Check Point",
+        "description": "Check Point firewall logs",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<date>[^ ]+) (?<logtime>[^ ]+) (?<src_ip>[^ ]+) product: (?<product>[^;]+);\\s*(?<message>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<134>Oct 10 13:55:36 checkpoint-gw 10Oct2023 13:55:36 192.168.1.1 product: VPN-1 & FireWall-1; Action=\"accept\"; orig=\"192.168.1.100\"; i/f_dir=\"inbound\"; i/f_name=\"eth0\"; has_accounting=\"0\"; uuid=\"<12345678-1234-5678-9abc-def012345678>\"; product=\"VPN-1 & FireWall-1\"; __policy_id_tag=\"product=VPN-1 & FireWall-1[db_tag={ABCD1234-5678-90EF-GHIJ-KLMNOPQRSTUV};mgmt=checkpoint-mgmt;date=1697026536;policy_name=Standard]\"; rule_name=\"Web_Access\"; rule_uid=\"{12345678-1234-5678-9abc-def012345678}\"; src=\"192.168.1.100\"; dst=\"203.0.113.1\"; proto=\"6\"; service=\"80\"; s_port=\"54321\""
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "checkpoint-gw",
+          "date": "10Oct2023",
+          "logtime": "13:55:36",
+          "src_ip": "192.168.1.1",
+          "product": "VPN-1 & FireWall-1",
+          "message": "Action=\"accept\"; orig=\"192.168.1.100\"; i/f_dir=\"inbound\"; i/f_name=\"eth0\"; has_accounting=\"0\"; uuid=\"<12345678-1234-5678-9abc-def012345678>\"; product=\"VPN-1 & FireWall-1\"; __policy_id_tag=\"product=VPN-1 & FireWall-1[db_tag={ABCD1234-5678-90EF-GHIJ-KLMNOPQRSTUV};mgmt=checkpoint-mgmt;date=1697026536;policy_name=Standard]\"; rule_name=\"Web_Access\"; rule_uid=\"{12345678-1234-5678-9abc-def012345678}\"; src=\"192.168.1.100\"; dst=\"203.0.113.1\"; proto=\"6\"; service=\"80\"; s_port=\"54321\""
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "f5-bigip",
+        "name": "F5 BIG-IP",
+        "description": "F5 BIG-IP application delivery controller logs",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<msgid>[^:]+):\\s*(?<message>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<134>Oct 10 13:55:36 bigip tmm[12345]: 01260013:4: SSL Handshake failed for TCP 192.168.1.100:54321 -> 10.0.0.1:443"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "bigip",
+          "program": "tmm",
+          "pid": "12345",
+          "msgid": "01260013",
+          "message": "4: SSL Handshake failed for TCP 192.168.1.100:54321 -> 10.0.0.1:443"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "juniper-srx",
+        "name": "Juniper SRX",
+        "description": "Juniper SRX firewall logs",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<event>[^:]+): (?<message>.*)$",
+        "timeFormat": "%b %d %Y %H:%M:%S",
+        "testString": "<134>Oct 10 2023 13:55:36 srx-firewall RT_FLOW[1234]: RT_FLOW_SESSION_CREATE: session created 192.168.1.100/54321->10.0.0.1/80 junos-http None 6 trust-to-untrust trust untrust 1234"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "srx-firewall",
+          "program": "RT_FLOW",
+          "pid": "1234",
+          "event": "RT_FLOW_SESSION_CREATE",
+          "message": "session created 192.168.1.100/54321->10.0.0.1/80 junos-http None 6 trust-to-untrust trust untrust 1234"
+        },
+        "parsed_time": "2023/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "sophos-utm",
+        "name": "Sophos UTM",
+        "description": "Sophos Unified Threat Management logs",
+        "regex": "^(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$",
+        "timeFormat": "%b %d %Y %H:%M:%S",
+        "testString": "Oct 10 2023 13:55:36 sophos-utm httpd: id=\"0299\" severity=\"info\" sys=\"SecureWeb\" sub=\"http\" name=\"web request blocked\" action=\"blocked\" method=\"GET\" srcip=\"192.168.1.100\" dstip=\"203.0.113.1\" user=\"\" ad_domain=\"\" statuscode=\"403\" cached=\"0\" profile=\"REF_DefaultHTTPProfile\" filteraction=\"REF_DefaultHTTPCFFAction\" size=\"1234\" request=\"0x12345678\" url=\"http://example.com/blocked\" referer=\"\" error=\"\" authtime=\"0\" dnstime=\"1\" cattime=\"12\" avscantime=\"0\" fullreqtime=\"123\" device=\"0\" auth=\"0\" ua=\"Mozilla/5.0\" exceptions=\"\""
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "hostname": "sophos-utm",
+          "component": "httpd",
+          "message": "id=\"0299\" severity=\"info\" sys=\"SecureWeb\" sub=\"http\" name=\"web request blocked\" action=\"blocked\" method=\"GET\" srcip=\"192.168.1.100\" dstip=\"203.0.113.1\" user=\"\" ad_domain=\"\" statuscode=\"403\" cached=\"0\" profile=\"REF_DefaultHTTPProfile\" filteraction=\"REF_DefaultHTTPCFFAction\" size=\"1234\" request=\"0x12345678\" url=\"http://example.com/blocked\" referer=\"\" error=\"\" authtime=\"0\" dnstime=\"1\" cattime=\"12\" avscantime=\"0\" fullreqtime=\"123\" device=\"0\" auth=\"0\" ua=\"Mozilla/5.0\" exceptions=\"\""
+        },
+        "parsed_time": "2023/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "syslog",
+        "name": "Standard Syslog",
+        "description": "RFC3164 syslog format",
+        "regex": "^(?<time>[^ ]* [^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\\/\\.\\-]*)(?:\\[(?<pid>[0-9]+)\\])?(?:[^\\:]*\\:)? *(?<message>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "Oct 10 13:55:36 myhost sshd[1234]: Failed password for invalid user admin from 192.168.1.100 port 22 ssh2"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "host": "myhost",
+          "ident": "sshd",
+          "pid": "1234",
+          "message": "Failed password for invalid user admin from 192.168.1.100 port 22 ssh2"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "auth-log",
+        "name": "Auth.log",
+        "description": "Linux authentication log format",
+        "regex": "^(?<time>[^ ]* [^ ]* [^ ]*) (?<host>[^ ]*) (?<service>[^\\[]*)(\\[(?<pid>[0-9]+)\\])?: (?<message>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "Oct 10 13:55:36 server sudo[12345]: user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/bin/ls"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "host": "server",
+          "service": "sudo",
+          "pid": "12345",
+          "message": "user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/bin/ls"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "kern-log",
+        "name": "Kernel Log",
+        "description": "Linux kernel log format",
+        "regex": "^(?<time>[^ ]* [^ ]* [^ ]*) (?<host>[^ ]*) kernel: \\[(?<timestamp>[^\\]]+)\\] (?<message>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "Oct 10 13:55:36 server kernel: [12345.678901] USB disconnect, address 1"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "host": "server",
+          "timestamp": "12345.678901",
+          "message": "USB disconnect, address 1"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "windows-event",
+        "name": "Windows Event Log",
+        "description": "Microsoft Windows Event Log format",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) MSWinEventLog\\t(?<log_level>\\d+)\\t(?<log_source>[^\\t]+)\\t(?<event_id>\\d+)\\t(?<date>[^\\t]+)\\t(?<message>.*)$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<134>Oct 10 13:55:36 windows-server MSWinEventLog\t1\tSecurity\t4624\tOct 10 2023 13:55:36\tAn account was successfully logged on."
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "windows-server",
+          "log_level": "1",
+          "log_source": "Security",
+          "event_id": "4624",
+          "date": "Oct 10 2023 13:55:36",
+          "message": "An account was successfully logged on."
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "json-log",
+        "name": "JSON Structured",
+        "description": "Structured JSON application logs",
+        "regex": "^(?<log>.*)$",
+        "timeFormat": "",
+        "testString": "{\"timestamp\":\"2023-01-01T12:00:00Z\",\"level\":\"INFO\",\"message\":\"Application started\",\"service\":\"web-server\",\"request_id\":\"abc123\"}"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "log": "{\"timestamp\":\"2023-01-01T12:00:00Z\",\"level\":\"INFO\",\"message\":\"Application started\",\"service\":\"web-server\",\"request_id\":\"abc123\"}"
+        },
+        "parsed_time": "2025/05/25 16:04:08 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "docker-log",
+        "name": "Docker Container",
+        "description": "Docker container log format",
+        "regex": "^(?<time>[^ ]+) (?<container_id>[^ ]+) (?<container_name>[^ ]+): (?<message>.*)$",
+        "timeFormat": "%Y-%m-%dT%H:%M:%S",
+        "testString": "2023-01-01T12:00:00.123456Z a1b2c3d4e5f6 web-server: Starting application on port 8080"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "container_id": "a1b2c3d4e5f6",
+          "container_name": "web-server",
+          "message": "Starting application on port 8080"
+        },
+        "parsed_time": "2023/01/01 12:00:00 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "k8s-log",
+        "name": "Kubernetes Pod",
+        "description": "Kubernetes pod log format",
+        "regex": "^(?<time>[^ ]+) (?<stream>[^ ]+) (?<log_type>[^ ]+) (?<message>.*)$",
+        "timeFormat": "%Y-%m-%dT%H:%M:%S",
+        "testString": "2023-01-01T12:00:00.123456Z stdout F {\"level\":\"info\",\"msg\":\"Server started\",\"port\":8080}"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "stream": "stdout",
+          "log_type": "F",
+          "message": "{\"level\":\"info\",\"msg\":\"Server started\",\"port\":8080}"
+        },
+        "parsed_time": "2023/01/01 12:00:00 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "splunk",
+        "name": "Splunk",
+        "description": "Splunk Enterprise logs",
+        "regex": "^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<component>[^ ]+) - - \\[(?<req_time>[^\\]]+)\\] \"(?<request>[^\"]*)\" (?<status>\\d+) (?<bytes>\\d+) - - - (?<duration>\\d+)ms$",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<134>Oct 10 13:55:36 splunk-server splunkd: HttpListener - - [10/Oct/2023:13:55:36.123 +0000] \"GET /services/server/info HTTP/1.1\" 200 1234 - - - 45ms"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "splunk-server",
+          "process": "splunkd",
+          "component": "HttpListener",
+          "req_time": "10/Oct/2023:13:55:36.123 +0000",
+          "request": "GET /services/server/info HTTP/1.1",
+          "status": "200",
+          "bytes": "1234",
+          "duration": "45"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "mysql-error",
+        "name": "MySQL Error Log",
+        "description": "MySQL database error log format",
+        "regex": "^(?<time>[^ ]* [^ ]*) (?<thread_id>[^ ]*) \\[(?<level>[^\\]]+)\\] (?<message>.*)$",
+        "timeFormat": "%Y-%m-%d %H:%M:%S",
+        "testString": "2023-01-01 12:00:00 123 [ERROR] Access denied for user 'root'@'localhost' (using password: YES)"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "thread_id": "123",
+          "level": "ERROR",
+          "message": "Access denied for user 'root'@'localhost' (using password: YES)"
+        },
+        "parsed_time": "2023/01/01 12:00:00 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "postgresql-log",
+        "name": "PostgreSQL Log",
+        "description": "PostgreSQL database log format",
+        "regex": "^(?<time>[^ ]* [^ ]*) \\[(?<pid>[0-9]+)\\] (?<level>[^:]*): (?<message>.*)$",
+        "timeFormat": "%Y-%m-%d %H:%M:%S",
+        "testString": "2023-01-01 12:00:00 [1234] ERROR: relation \"users\" does not exist at character 15"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pid": "1234",
+          "level": "ERROR",
+          "message": "relation \"users\" does not exist at character 15"
+        },
+        "parsed_time": "2023/01/01 12:00:00 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "mongodb-log",
+        "name": "MongoDB Log",
+        "description": "MongoDB database log format",
+        "regex": "^(?<time>[^ ]+) (?<severity>[^ ]+) (?<component>[^ ]+) \\[(?<context>[^\\]]+)\\] (?<message>.*)$",
+        "timeFormat": "%Y-%m-%dT%H:%M:%S",
+        "testString": "2023-01-01T12:00:00.123+0000 I NETWORK [listener] connection accepted from 127.0.0.1:54321 #1 (1 connection now open)"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "severity": "I",
+          "component": "NETWORK",
+          "context": "listener",
+          "message": "connection accepted from 127.0.0.1:54321 #1 (1 connection now open)"
+        },
+        "parsed_time": "2023/01/01 12:00:00 +0000"
+      }
+    }
+  ],
+  "failedParsers": []
 }
