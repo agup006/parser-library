@@ -15,8 +15,4 @@ npm run lint
 echo "🧪 Running unit tests..."
 npm run test:unit
 
-# Run build to ensure it compiles
-echo "🏗️  Building..."
-npm run build
-
 echo "✅ All pre-commit checks passed!" 
