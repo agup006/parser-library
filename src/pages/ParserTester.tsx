@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setLoading, setError } from '../store';
 import { testParser } from '../services/parserApi';
@@ -37,6 +37,21 @@ const ParserTester: React.FC = () => {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['web-logs', 'cisco-network']));
   const [selectedPattern, setSelectedPattern] = useState<string>('apache-common');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isTablet, setIsTablet] = useState<boolean>(false);
+
+  // Responsive breakpoints
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 768 && width < 1024);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   // Comprehensive Fluent Bit Parser Library based on vendor CSV data
   const parserLibrary: PatternCategory[] = [
@@ -1039,17 +1054,28 @@ const ParserTester: React.FC = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #dbeafe 0%, #ffffff 50%, #e0e7ff 100%)', display: 'flex' }}>
+    <div style={{ 
+      height: '100vh',
+      minHeight: '100vh', 
+      background: 'linear-gradient(135deg, #dbeafe 0%, #ffffff 50%, #e0e7ff 100%)', 
+      display: 'flex',
+      flexDirection: isMobile ? 'column' : 'row',
+      overflow: 'hidden'
+    }}>
       {/* Sidebar - Parser Library */}
       <div style={{ 
-        width: '280px', 
+        width: isMobile ? '100%' : isTablet ? '280px' : '320px',
+        minWidth: isMobile ? 'auto' : '280px',
+        height: isMobile ? 'auto' : '100vh',
+        minHeight: isMobile ? 'auto' : '100vh',
         background: 'white', 
-        borderRight: '1px solid #e5e7eb', 
-        boxShadow: '2px 0 4px rgba(0,0,0,0.1)',
+        borderRight: isMobile ? 'none' : '1px solid #e5e7eb',
+        borderBottom: isMobile ? '1px solid #e5e7eb' : 'none',
+        boxShadow: isMobile ? '0 2px 4px rgba(0,0,0,0.1)' : '2px 0 4px rgba(0,0,0,0.1)',
         overflowY: 'auto',
-        maxHeight: '100vh'
+        maxHeight: isMobile ? '50vh' : '100vh'
       }}>
-        <div style={{ padding: '1.5rem 1rem' }}>
+        <div style={{ padding: isMobile ? '1rem 0.75rem' : '1.5rem 1rem' }}>
           <h2 style={{ 
             fontSize: '1.125rem', 
             fontWeight: '600', 
@@ -1259,23 +1285,45 @@ const ParserTester: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div style={{ flex: 1, padding: '2rem' }}>
+      <div style={{ 
+        flex: 1, 
+        padding: isMobile ? '1rem' : '2rem',
+        minWidth: 0, // Prevents flex item from overflowing
+        overflowY: 'auto',
+        height: isMobile ? 'auto' : '100vh'
+      }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem' }}>
+          <div style={{ textAlign: 'left', marginBottom: isMobile ? '0.75rem' : '1rem' }}>
+            <h1 style={{ 
+              fontSize: isMobile ? '1.5rem' : '1.875rem', 
+              fontWeight: 'bold', 
+              color: '#111827', 
+              marginBottom: '0.5rem' 
+            }}>
               Fluent Bit Parser Tester
             </h1>
-            <p style={{ fontSize: '1.125rem', color: '#6b7280', maxWidth: '32rem', margin: '0 auto' }}>
+            <p style={{ 
+              fontSize: isMobile ? '0.875rem' : '1rem', 
+              color: '#6b7280', 
+              maxWidth: '48rem', 
+              margin: '0',
+              padding: isMobile ? '0 1rem' : '0',
+              lineHeight: '1.4'
+            }}>
               Test and validate your Fluent Bit regex parsers with real-time feedback using the Onigmo regex library
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', 
+            gap: isMobile ? '1rem' : '2rem' 
+          }}>
             {/* Input Section */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1rem' : '1.5rem' }}>
               {/* Input Form */}
-              <div style={{ background: 'white', borderRadius: '0.75rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e5e7eb', padding: '1.5rem' }}>
+                              <div style={{ background: 'white', borderRadius: '0.75rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e5e7eb', padding: isMobile ? '1rem' : '1.5rem' }}>
                 <h2 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827', marginBottom: '1.5rem' }}>Parser Configuration</h2>
                 
                 {/* Error Display */}
@@ -1409,7 +1457,7 @@ const ParserTester: React.FC = () => {
             {/* Results Section */}
             <div>
               {result ? (
-                <div style={{ background: 'white', borderRadius: '0.75rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e5e7eb', padding: '1.5rem' }}>
+                <div style={{ background: 'white', borderRadius: '0.75rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e5e7eb', padding: isMobile ? '1rem' : '1.5rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                     <span style={{ color: '#10b981', marginRight: '0.5rem', fontSize: '1.5rem' }}>✅</span>
                     <h2 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827', margin: 0 }}>Parser Results</h2>
@@ -1530,7 +1578,7 @@ const ParserTester: React.FC = () => {
                 </div>
               ) : (
                 /* Placeholder */
-                <div style={{ background: 'white', borderRadius: '0.75rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e5e7eb', padding: '1.5rem' }}>
+                <div style={{ background: 'white', borderRadius: '0.75rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e5e7eb', padding: isMobile ? '1rem' : '1.5rem' }}>
                   <div style={{ textAlign: 'center', padding: '3rem 0' }}>
                     <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>▶️</div>
                     <h3 style={{ fontSize: '1.125rem', fontWeight: '500', color: '#111827', marginBottom: '0.5rem', margin: '0 0 0.5rem 0' }}>Ready to Test</h3>
@@ -1543,22 +1591,7 @@ const ParserTester: React.FC = () => {
             </div>
           </div>
 
-          {/* Footer Info */}
-          <div style={{ marginTop: '3rem', textAlign: 'center' }}>
-            <div style={{ background: 'white', borderRadius: '0.75rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e5e7eb', padding: '1.5rem' }}>
-              <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827', marginBottom: '1rem', margin: '0 0 1rem 0' }}>About This Tool</h3>
-              <p style={{ color: '#6b7280', marginBottom: '1rem', margin: '0 0 1rem 0' }}>
-                This parser tester uses the Calyptia API with the same Onigmo regex engine that powers Fluent Bit, 
-                ensuring your patterns work exactly as expected in production.
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', fontSize: '0.875rem', color: '#6b7280' }}>
-                <span>✓ Named capture groups</span>
-                <span>✓ Time format parsing</span>
-                <span>✓ Real-time validation</span>
-                <span>✓ Production-ready patterns</span>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
