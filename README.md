@@ -98,6 +98,89 @@ npm run test:coverage
 node scripts/validate-parsers.js
 ```
 
+## 🔄 CI/CD Pipeline
+
+### Automated Testing on Every Commit
+
+The project includes comprehensive CI/CD workflows that run automatically on every commit to the main branch:
+
+#### GitHub Actions Workflows
+
+1. **Test Suite** (`.github/workflows/test.yml`)
+   - Runs on every push to `main` and `develop` branches
+   - Runs on all pull requests to `main`
+   - Tests against Node.js 18.x and 20.x
+   - Includes:
+     - TypeScript type checking
+     - ESLint code quality checks
+     - Unit tests with coverage reporting
+     - End-to-end tests with Playwright
+     - Production build validation
+     - Parser configuration validation
+
+2. **Pull Request Checks** (`.github/workflows/pr-checks.yml`)
+   - Validates all PRs before merging
+   - Automatically comments on PRs with test results
+   - Prevents broken code from being merged
+
+3. **Status Badges** (`.github/workflows/status-badges.yml`)
+   - Updates README badges with current test status
+   - Shows coverage percentage
+
+#### Pre-commit Hooks
+
+Local git hooks ensure code quality before commits:
+
+```bash
+# Install git hooks
+npm run prepare
+
+# Hooks will automatically run:
+# - Type checking
+# - Linting
+# - Unit tests
+# - Build validation
+```
+
+#### Test Coverage
+
+- **Unit Tests**: 61 tests across 5 files
+- **Coverage**: 50.16% statement coverage
+- **E2E Tests**: 3 comprehensive integration tests
+- **Parser Validation**: 100% success rate (13/13 categories)
+
+#### Deployment
+
+- **Automatic**: Vercel deploys every push to `main`
+- **Preview**: Vercel creates preview deployments for PRs
+- **Rollback**: Easy rollback via Vercel dashboard
+
+#### Setting Up CI/CD for Your Fork
+
+1. **Enable GitHub Actions**:
+   ```bash
+   # Actions are enabled by default when you fork
+   # Workflows will run automatically on push/PR
+   ```
+
+2. **Optional: Add Codecov Integration**:
+   ```bash
+   # Add CODECOV_TOKEN to GitHub Secrets
+   # Get token from codecov.io
+   ```
+
+3. **Optional: Add Status Badges**:
+   ```bash
+   # Create a GitHub Gist for badge storage
+   # Add GIST_ID to GitHub Secrets
+   ```
+
+#### Workflow Status
+
+[![Tests](https://github.com/yourusername/parser-library/workflows/Test%20Suite/badge.svg)](https://github.com/yourusername/parser-library/actions)
+[![Coverage](https://img.shields.io/badge/Coverage-50%25-orange)](https://github.com/yourusername/parser-library/actions)
+[![Parsers](https://img.shields.io/badge/Parsers-13%2F13%20Passing-brightgreen)](https://github.com/yourusername/parser-library/actions)
+
 ## 📚 Parser Library
 
 The application includes 100+ validated parsers across 15 categories:

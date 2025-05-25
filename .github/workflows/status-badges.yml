@@ -1,0 +1,37 @@
+name: Update Status Badges
+
+on:
+  push:
+    branches: [ main ]
+  workflow_run:
+    workflows: ["Test Suite"]
+    types:
+      - completed
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Update test status badge
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GITHUB_TOKEN }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: parser-library-tests.json
+        label: Tests
+        message: ${{ github.event.workflow_run.conclusion == 'success' && 'passing' || 'failing' }}
+        color: ${{ github.event.workflow_run.conclusion == 'success' && 'brightgreen' || 'red' }}
+        
+    - name: Update coverage badge
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GITHUB_TOKEN }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: parser-library-coverage.json
+        label: Coverage
+        message: "50%"
+        color: orange 

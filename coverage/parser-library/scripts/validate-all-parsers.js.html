@@ -1,0 +1,1546 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for parser-library/scripts/validate-all-parsers.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">parser-library/scripts</a> validate-all-parsers.js</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/488</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/488</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a>
+<a name='L284'></a><a href='#L284'>284</a>
+<a name='L285'></a><a href='#L285'>285</a>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a>
+<a name='L299'></a><a href='#L299'>299</a>
+<a name='L300'></a><a href='#L300'>300</a>
+<a name='L301'></a><a href='#L301'>301</a>
+<a name='L302'></a><a href='#L302'>302</a>
+<a name='L303'></a><a href='#L303'>303</a>
+<a name='L304'></a><a href='#L304'>304</a>
+<a name='L305'></a><a href='#L305'>305</a>
+<a name='L306'></a><a href='#L306'>306</a>
+<a name='L307'></a><a href='#L307'>307</a>
+<a name='L308'></a><a href='#L308'>308</a>
+<a name='L309'></a><a href='#L309'>309</a>
+<a name='L310'></a><a href='#L310'>310</a>
+<a name='L311'></a><a href='#L311'>311</a>
+<a name='L312'></a><a href='#L312'>312</a>
+<a name='L313'></a><a href='#L313'>313</a>
+<a name='L314'></a><a href='#L314'>314</a>
+<a name='L315'></a><a href='#L315'>315</a>
+<a name='L316'></a><a href='#L316'>316</a>
+<a name='L317'></a><a href='#L317'>317</a>
+<a name='L318'></a><a href='#L318'>318</a>
+<a name='L319'></a><a href='#L319'>319</a>
+<a name='L320'></a><a href='#L320'>320</a>
+<a name='L321'></a><a href='#L321'>321</a>
+<a name='L322'></a><a href='#L322'>322</a>
+<a name='L323'></a><a href='#L323'>323</a>
+<a name='L324'></a><a href='#L324'>324</a>
+<a name='L325'></a><a href='#L325'>325</a>
+<a name='L326'></a><a href='#L326'>326</a>
+<a name='L327'></a><a href='#L327'>327</a>
+<a name='L328'></a><a href='#L328'>328</a>
+<a name='L329'></a><a href='#L329'>329</a>
+<a name='L330'></a><a href='#L330'>330</a>
+<a name='L331'></a><a href='#L331'>331</a>
+<a name='L332'></a><a href='#L332'>332</a>
+<a name='L333'></a><a href='#L333'>333</a>
+<a name='L334'></a><a href='#L334'>334</a>
+<a name='L335'></a><a href='#L335'>335</a>
+<a name='L336'></a><a href='#L336'>336</a>
+<a name='L337'></a><a href='#L337'>337</a>
+<a name='L338'></a><a href='#L338'>338</a>
+<a name='L339'></a><a href='#L339'>339</a>
+<a name='L340'></a><a href='#L340'>340</a>
+<a name='L341'></a><a href='#L341'>341</a>
+<a name='L342'></a><a href='#L342'>342</a>
+<a name='L343'></a><a href='#L343'>343</a>
+<a name='L344'></a><a href='#L344'>344</a>
+<a name='L345'></a><a href='#L345'>345</a>
+<a name='L346'></a><a href='#L346'>346</a>
+<a name='L347'></a><a href='#L347'>347</a>
+<a name='L348'></a><a href='#L348'>348</a>
+<a name='L349'></a><a href='#L349'>349</a>
+<a name='L350'></a><a href='#L350'>350</a>
+<a name='L351'></a><a href='#L351'>351</a>
+<a name='L352'></a><a href='#L352'>352</a>
+<a name='L353'></a><a href='#L353'>353</a>
+<a name='L354'></a><a href='#L354'>354</a>
+<a name='L355'></a><a href='#L355'>355</a>
+<a name='L356'></a><a href='#L356'>356</a>
+<a name='L357'></a><a href='#L357'>357</a>
+<a name='L358'></a><a href='#L358'>358</a>
+<a name='L359'></a><a href='#L359'>359</a>
+<a name='L360'></a><a href='#L360'>360</a>
+<a name='L361'></a><a href='#L361'>361</a>
+<a name='L362'></a><a href='#L362'>362</a>
+<a name='L363'></a><a href='#L363'>363</a>
+<a name='L364'></a><a href='#L364'>364</a>
+<a name='L365'></a><a href='#L365'>365</a>
+<a name='L366'></a><a href='#L366'>366</a>
+<a name='L367'></a><a href='#L367'>367</a>
+<a name='L368'></a><a href='#L368'>368</a>
+<a name='L369'></a><a href='#L369'>369</a>
+<a name='L370'></a><a href='#L370'>370</a>
+<a name='L371'></a><a href='#L371'>371</a>
+<a name='L372'></a><a href='#L372'>372</a>
+<a name='L373'></a><a href='#L373'>373</a>
+<a name='L374'></a><a href='#L374'>374</a>
+<a name='L375'></a><a href='#L375'>375</a>
+<a name='L376'></a><a href='#L376'>376</a>
+<a name='L377'></a><a href='#L377'>377</a>
+<a name='L378'></a><a href='#L378'>378</a>
+<a name='L379'></a><a href='#L379'>379</a>
+<a name='L380'></a><a href='#L380'>380</a>
+<a name='L381'></a><a href='#L381'>381</a>
+<a name='L382'></a><a href='#L382'>382</a>
+<a name='L383'></a><a href='#L383'>383</a>
+<a name='L384'></a><a href='#L384'>384</a>
+<a name='L385'></a><a href='#L385'>385</a>
+<a name='L386'></a><a href='#L386'>386</a>
+<a name='L387'></a><a href='#L387'>387</a>
+<a name='L388'></a><a href='#L388'>388</a>
+<a name='L389'></a><a href='#L389'>389</a>
+<a name='L390'></a><a href='#L390'>390</a>
+<a name='L391'></a><a href='#L391'>391</a>
+<a name='L392'></a><a href='#L392'>392</a>
+<a name='L393'></a><a href='#L393'>393</a>
+<a name='L394'></a><a href='#L394'>394</a>
+<a name='L395'></a><a href='#L395'>395</a>
+<a name='L396'></a><a href='#L396'>396</a>
+<a name='L397'></a><a href='#L397'>397</a>
+<a name='L398'></a><a href='#L398'>398</a>
+<a name='L399'></a><a href='#L399'>399</a>
+<a name='L400'></a><a href='#L400'>400</a>
+<a name='L401'></a><a href='#L401'>401</a>
+<a name='L402'></a><a href='#L402'>402</a>
+<a name='L403'></a><a href='#L403'>403</a>
+<a name='L404'></a><a href='#L404'>404</a>
+<a name='L405'></a><a href='#L405'>405</a>
+<a name='L406'></a><a href='#L406'>406</a>
+<a name='L407'></a><a href='#L407'>407</a>
+<a name='L408'></a><a href='#L408'>408</a>
+<a name='L409'></a><a href='#L409'>409</a>
+<a name='L410'></a><a href='#L410'>410</a>
+<a name='L411'></a><a href='#L411'>411</a>
+<a name='L412'></a><a href='#L412'>412</a>
+<a name='L413'></a><a href='#L413'>413</a>
+<a name='L414'></a><a href='#L414'>414</a>
+<a name='L415'></a><a href='#L415'>415</a>
+<a name='L416'></a><a href='#L416'>416</a>
+<a name='L417'></a><a href='#L417'>417</a>
+<a name='L418'></a><a href='#L418'>418</a>
+<a name='L419'></a><a href='#L419'>419</a>
+<a name='L420'></a><a href='#L420'>420</a>
+<a name='L421'></a><a href='#L421'>421</a>
+<a name='L422'></a><a href='#L422'>422</a>
+<a name='L423'></a><a href='#L423'>423</a>
+<a name='L424'></a><a href='#L424'>424</a>
+<a name='L425'></a><a href='#L425'>425</a>
+<a name='L426'></a><a href='#L426'>426</a>
+<a name='L427'></a><a href='#L427'>427</a>
+<a name='L428'></a><a href='#L428'>428</a>
+<a name='L429'></a><a href='#L429'>429</a>
+<a name='L430'></a><a href='#L430'>430</a>
+<a name='L431'></a><a href='#L431'>431</a>
+<a name='L432'></a><a href='#L432'>432</a>
+<a name='L433'></a><a href='#L433'>433</a>
+<a name='L434'></a><a href='#L434'>434</a>
+<a name='L435'></a><a href='#L435'>435</a>
+<a name='L436'></a><a href='#L436'>436</a>
+<a name='L437'></a><a href='#L437'>437</a>
+<a name='L438'></a><a href='#L438'>438</a>
+<a name='L439'></a><a href='#L439'>439</a>
+<a name='L440'></a><a href='#L440'>440</a>
+<a name='L441'></a><a href='#L441'>441</a>
+<a name='L442'></a><a href='#L442'>442</a>
+<a name='L443'></a><a href='#L443'>443</a>
+<a name='L444'></a><a href='#L444'>444</a>
+<a name='L445'></a><a href='#L445'>445</a>
+<a name='L446'></a><a href='#L446'>446</a>
+<a name='L447'></a><a href='#L447'>447</a>
+<a name='L448'></a><a href='#L448'>448</a>
+<a name='L449'></a><a href='#L449'>449</a>
+<a name='L450'></a><a href='#L450'>450</a>
+<a name='L451'></a><a href='#L451'>451</a>
+<a name='L452'></a><a href='#L452'>452</a>
+<a name='L453'></a><a href='#L453'>453</a>
+<a name='L454'></a><a href='#L454'>454</a>
+<a name='L455'></a><a href='#L455'>455</a>
+<a name='L456'></a><a href='#L456'>456</a>
+<a name='L457'></a><a href='#L457'>457</a>
+<a name='L458'></a><a href='#L458'>458</a>
+<a name='L459'></a><a href='#L459'>459</a>
+<a name='L460'></a><a href='#L460'>460</a>
+<a name='L461'></a><a href='#L461'>461</a>
+<a name='L462'></a><a href='#L462'>462</a>
+<a name='L463'></a><a href='#L463'>463</a>
+<a name='L464'></a><a href='#L464'>464</a>
+<a name='L465'></a><a href='#L465'>465</a>
+<a name='L466'></a><a href='#L466'>466</a>
+<a name='L467'></a><a href='#L467'>467</a>
+<a name='L468'></a><a href='#L468'>468</a>
+<a name='L469'></a><a href='#L469'>469</a>
+<a name='L470'></a><a href='#L470'>470</a>
+<a name='L471'></a><a href='#L471'>471</a>
+<a name='L472'></a><a href='#L472'>472</a>
+<a name='L473'></a><a href='#L473'>473</a>
+<a name='L474'></a><a href='#L474'>474</a>
+<a name='L475'></a><a href='#L475'>475</a>
+<a name='L476'></a><a href='#L476'>476</a>
+<a name='L477'></a><a href='#L477'>477</a>
+<a name='L478'></a><a href='#L478'>478</a>
+<a name='L479'></a><a href='#L479'>479</a>
+<a name='L480'></a><a href='#L480'>480</a>
+<a name='L481'></a><a href='#L481'>481</a>
+<a name='L482'></a><a href='#L482'>482</a>
+<a name='L483'></a><a href='#L483'>483</a>
+<a name='L484'></a><a href='#L484'>484</a>
+<a name='L485'></a><a href='#L485'>485</a>
+<a name='L486'></a><a href='#L486'>486</a>
+<a name='L487'></a><a href='#L487'>487</a>
+<a name='L488'></a><a href='#L488'>488</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >#!/usr/bin/env node</span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import axios from 'axios';</span>
+<span class="cstat-no" title="statement not covered" >import fs from 'fs';</span>
+<span class="cstat-no" title="statement not covered" >import path from 'path';</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const API_BASE_URL = 'https://core.calyptia.com/api/parser';</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >// Function to extract parser library from ParserTester.tsx</span>
+<span class="cstat-no" title="statement not covered" >function extractParserLibrary() {</span>
+<span class="cstat-no" title="statement not covered" >  const filePath = path.join(process.cwd(), 'src/pages/ParserTester.tsx');</span>
+<span class="cstat-no" title="statement not covered" >  const content = fs.readFileSync(filePath, 'utf8');</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  // Extract the parserLibrary array from the file</span>
+<span class="cstat-no" title="statement not covered" >  const libraryMatch = content.match(/const parserLibrary: PatternCategory\[\] = (\[[\s\S]*?\]);/);</span>
+<span class="cstat-no" title="statement not covered" >  if (!libraryMatch) {</span>
+<span class="cstat-no" title="statement not covered" >    throw new Error('Could not extract parser library from ParserTester.tsx');</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  // Convert the extracted string to a JavaScript object</span>
+<span class="cstat-no" title="statement not covered" >  // This is a simplified approach - in production, you'd want a more robust parser</span>
+<span class="cstat-no" title="statement not covered" >  const libraryString = libraryMatch[1];</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  // Replace the regex format from /pattern/ to just pattern for evaluation</span>
+<span class="cstat-no" title="statement not covered" >  const cleanedString = libraryString</span>
+<span class="cstat-no" title="statement not covered" >    .replace(/regex: '\/([^']+)\/',/g, "regex: '$1',")</span>
+<span class="cstat-no" title="statement not covered" >    .replace(/regex: "\/([^"]+)\/",/g, 'regex: "$1",');</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    // Use eval to parse the JavaScript object (not recommended for production)</span>
+<span class="cstat-no" title="statement not covered" >    // In production, you'd want to use a proper JavaScript parser</span>
+<span class="cstat-no" title="statement not covered" >    const parserLibrary = eval(cleanedString);</span>
+<span class="cstat-no" title="statement not covered" >    return parserLibrary;</span>
+<span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
+<span class="cstat-no" title="statement not covered" >    console.error('Error parsing library:', error);</span>
+<span class="cstat-no" title="statement not covered" >    throw error;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >// Hardcoded parser library (extracted from ParserTester.tsx)</span>
+<span class="cstat-no" title="statement not covered" >const parserLibrary = [</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'web-logs',</span>
+<span class="cstat-no" title="statement not covered" >    name: 'Web Logs',</span>
+<span class="cstat-no" title="statement not covered" >    icon: '🌐',</span>
+<span class="cstat-no" title="statement not covered" >    patterns: [</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'apache-common',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Apache Common Log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Standard Apache access log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;host&gt;[^ ]*) [^ ]* (?&lt;user&gt;[^ ]*) \\[(?&lt;time&gt;[^\\]]*)\\] "(?&lt;method&gt;\\S+)(?: +(?&lt;path&gt;[^ ]*) +\\S*)?" (?&lt;code&gt;[^ ]*) (?&lt;size&gt;[^ ]*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%d/%b/%Y:%H:%M:%S %z',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'apache-combined',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Apache Combined Log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Apache access log with referer and user agent',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;host&gt;[^ ]*) [^ ]* (?&lt;user&gt;[^ ]*) \\[(?&lt;time&gt;[^\\]]*)\\] "(?&lt;method&gt;\\S+)(?: +(?&lt;path&gt;[^ ]*) +\\S*)?" (?&lt;code&gt;[^ ]*) (?&lt;size&gt;[^ ]*)(?: "(?&lt;referer&gt;[^"]*)" "(?&lt;agent&gt;.*)")?$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%d/%b/%Y:%H:%M:%S %z',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326 "http://www.example.com/start.html" "Mozilla/4.08 [en] (Win98; I ;Nav)"'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'nginx-access',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Nginx Access Log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Standard Nginx access log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;remote&gt;[^ ]*) (?&lt;host&gt;[^ ]*) (?&lt;user&gt;[^ ]*) \\[(?&lt;time&gt;[^\\]]*)\\] "(?&lt;method&gt;\\S+)(?: +(?&lt;path&gt;[^"]*?)(?: +\\S*)?)?" (?&lt;code&gt;[^ ]*) (?&lt;size&gt;[^ ]*)(?: "(?&lt;referer&gt;[^"]*)" "(?&lt;agent&gt;[^"]*)")?$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%d/%b/%Y:%H:%M:%S %z',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '192.168.1.1 example.com user [10/Oct/2000:13:55:36 -0700] "GET /index.html HTTP/1.1" 200 1234 "http://example.com" "Mozilla/5.0"'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'iis-log',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'IIS Log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Microsoft IIS web server log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;date&gt;\\S+) (?&lt;timestamp&gt;\\S+) (?&lt;s_ip&gt;\\S+) (?&lt;cs_method&gt;\\S+) (?&lt;cs_uri_stem&gt;\\S+) (?&lt;cs_uri_query&gt;\\S+) (?&lt;s_port&gt;\\S+) (?&lt;cs_username&gt;\\S+) (?&lt;c_ip&gt;\\S+) (?&lt;cs_user_agent&gt;\\S+) (?&lt;sc_status&gt;\\S+) (?&lt;sc_substatus&gt;\\S+) (?&lt;sc_win32_status&gt;\\S+) (?&lt;time_taken&gt;\\S+)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0 200 0 0 1234'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'haproxy',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'HAProxy',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'HAProxy load balancer log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) (?&lt;process&gt;[^\\[]+)\\[(?&lt;pid&gt;\\d+)\\]: (?&lt;client_ip&gt;[^:]+):(?&lt;client_port&gt;\\d+) \\[(?&lt;accept_date&gt;[^\\]]+)\\] (?&lt;frontend_name&gt;[^ ]+) (?&lt;backend_name&gt;[^ ]+) (?&lt;status_code&gt;\\d+) (?&lt;bytes_read&gt;\\d+) (?&lt;request&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 13:55:36 loadbalancer haproxy[1234]: 192.168.1.100:54321 [10/Oct/2000:13:55:36.123] frontend backend 200 1234 "GET /api/health HTTP/1.1"'</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'cisco-network',</span>
+<span class="cstat-no" title="statement not covered" >    name: 'Cisco Network',</span>
+<span class="cstat-no" title="statement not covered" >    icon: '🔧',</span>
+<span class="cstat-no" title="statement not covered" >    patterns: [</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'cisco-asa',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Cisco ASA',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Cisco Adaptive Security Appliance logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^%ASA-(?&lt;pri&gt;\\d+)-(?&lt;id&gt;\\d+):\\s+(?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %Y %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '%ASA-6-302013: Built inbound TCP connection 12345 for outside:192.168.1.100/1234 (192.168.1.100/1234) to inside:10.0.0.1/80 (10.0.0.1/80)'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'cisco-ios',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Cisco IOS',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Cisco IOS router/switch logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;seq&gt;\\d+): (?&lt;timestamp&gt;[^%]+): %(?&lt;facility&gt;[^-]+)-(?&lt;severity&gt;\\d+)-(?&lt;mnemonic&gt;[^:]+): (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;189&gt;123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.1.100)'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'cisco-meraki',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Cisco Meraki',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Cisco Meraki cloud-managed device logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;version&gt;\\d+) (?&lt;timestamp&gt;[^ ]+) (?&lt;device_name&gt;[^ ]+) (?&lt;type&gt;[^ ]+) (?&lt;event_type&gt;[^ ]+) (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%Y-%m-%dT%H:%M:%SZ',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;1 2023-01-01T12:00:00Z MX84 urls src=192.168.1.100 dst=example.com request: GET example.com/'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'cisco-firepower',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Cisco Firepower',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Cisco Firepower Threat Defense logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) (?&lt;program&gt;[^:]+): (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 13:55:36 firepower SFIMS: [Primary Detection Engine (a8c4e3b2-1234-5678-9abc-def012345678)] Connection Type: Start, User: N/A'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'cisco-ise',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Cisco ISE',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Cisco Identity Services Engine logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) (?&lt;program&gt;[^ ]+) (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 13:55:36 ise-server CISE_RADIUS_Accounting 0000123456 1 0 2023-01-01 12:00:00.123 +00:00 0000123456 5200 NOTICE'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'cisco-nexus',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Cisco Nexus',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Cisco Nexus data center switch logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) %(?&lt;facility&gt;[^-]+)-(?&lt;severity&gt;[^-]+)-(?&lt;mnemonic&gt;[^:]+): (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;189&gt;Oct 10 13:55:36 nexus-switch %ETHPORT-5-IF_UP: Interface Ethernet1/1 is up'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'cisco-wlc',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Cisco WLC',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Cisco Wireless LAN Controller logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;timestamp&gt;[^\\s]+\\s+[^\\s]+\\s+[^\\s]+) (?&lt;hostname&gt;[^\\s]+) \\*(?&lt;log_time&gt;[^%]+): %(?&lt;facility&gt;[^-]+)-(?&lt;severity&gt;\\d+)-(?&lt;mnemonic&gt;[^:]+): (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 13:55:36 wlc-controller *Oct 10 13:55:36.123: %DOT11-6-ASSOC: Station associated'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'cisco-umbrella',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Cisco Umbrella',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Cisco Umbrella DNS security logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) CEF:(?&lt;version&gt;[^|]+)\\|(?&lt;vendor&gt;[^|]+)\\|(?&lt;product&gt;[^|]+)\\|(?&lt;product_version&gt;[^|]+)\\|(?&lt;event_id&gt;[^|]+)\\|(?&lt;event_name&gt;[^|]+)\\|(?&lt;severity&gt;[^|]+)\\|(?&lt;extension&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 13:55:36 umbrella CEF:0|Cisco|Umbrella|1.0|1|DNS Request Allowed|3|src=192.168.1.100 dst=8.8.8.8 dhost=example.com'</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'security-appliances',</span>
+<span class="cstat-no" title="statement not covered" >    name: 'Security Appliances',</span>
+<span class="cstat-no" title="statement not covered" >    icon: '🛡️',</span>
+<span class="cstat-no" title="statement not covered" >    patterns: [</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'palo-alto',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Palo Alto Networks',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Palo Alto Networks firewall logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;timestamp&gt;[^\\s]+\\s+[^\\s]+\\s+[^\\s]+\\s+[^\\s]+) (?&lt;hostname&gt;[^\\s]+) (?&lt;program&gt;[^:]+): (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 2023 13:55:36 pa-firewall TRAFFIC: Connection from 192.168.1.100 to 10.0.0.1'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'fortinet-fortigate',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Fortinet FortiGate',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Fortinet FortiGate firewall logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^date=(?&lt;fdate&gt;[^ ]+)\\s+time=(?&lt;ftime&gt;[^ ]+)\\s+logid="(?&lt;logid&gt;[^"]+)"\\s+type="(?&lt;type&gt;[^"]+)"\\s+subtype="(?&lt;subtype&gt;[^"]+)"\\s+(?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%Y-%m-%d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: 'date=2023-01-01 time=12:00:00 logid="0000000013" type="traffic" subtype="forward" level="notice" vd="root" eventtime=1672574400 srcip=192.168.1.100 srcport=12345 srcintf="port1" dstip=8.8.8.8 dstport=53 dstintf="port2" policyid=1 sessionid=123456 proto=17 action="accept" policytype="policy" service="DNS" dstcountry="United States" srccountry="Reserved" trandisp="snat" transip=203.0.113.1 transport=12345 duration=1 sentbyte=64 rcvdbyte=80'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'checkpoint',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Check Point',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Check Point firewall logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) (?&lt;date&gt;[^ ]+) (?&lt;logtime&gt;[^ ]+) (?&lt;src_ip&gt;[^ ]+) product: (?&lt;product&gt;[^;]+);\\s*(?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 13:55:36 checkpoint-gw 10Oct2023 13:55:36 192.168.1.1 product: VPN-1 &amp; FireWall-1; Action="accept"; orig="192.168.1.100"; i/f_dir="inbound"; i/f_name="eth0"; has_accounting="0"; uuid="&lt;12345678-1234-5678-9abc-def012345678&gt;"; product="VPN-1 &amp; FireWall-1"; __policy_id_tag="product=VPN-1 &amp; FireWall-1[db_tag={ABCD1234-5678-90EF-GHIJ-KLMNOPQRSTUV};mgmt=checkpoint-mgmt;date=1697026536;policy_name=Standard]"; rule_name="Web_Access"; rule_uid="{12345678-1234-5678-9abc-def012345678}"; src="192.168.1.100"; dst="203.0.113.1"; proto="6"; service="80"; s_port="54321"'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'f5-bigip',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'F5 BIG-IP',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'F5 BIG-IP application delivery controller logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) (?&lt;program&gt;[^\\[]+)\\[(?&lt;pid&gt;\\d+)\\]: (?&lt;msgid&gt;[^:]+):\\s*(?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 13:55:36 bigip tmm[12345]: 01260013:4: SSL Handshake failed for TCP 192.168.1.100:54321 -&gt; 10.0.0.1:443'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'juniper-srx',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Juniper SRX',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Juniper SRX firewall logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) (?&lt;program&gt;[^\\[]+)\\[(?&lt;pid&gt;\\d+)\\]: (?&lt;event&gt;[^:]+): (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %Y %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 2023 13:55:36 srx-firewall RT_FLOW[1234]: RT_FLOW_SESSION_CREATE: session created 192.168.1.100/54321-&gt;10.0.0.1/80 junos-http None 6 trust-to-untrust trust untrust 1234'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'sophos-utm',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Sophos UTM',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Sophos Unified Threat Management logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) (?&lt;component&gt;[^:]+): (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %Y %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: 'Oct 10 2023 13:55:36 sophos-utm httpd: id="0299" severity="info" sys="SecureWeb" sub="http" name="web request blocked" action="blocked" method="GET" srcip="192.168.1.100" dstip="203.0.113.1" user="" ad_domain="" statuscode="403" cached="0" profile="REF_DefaultHTTPProfile" filteraction="REF_DefaultHTTPCFFAction" size="1234" request="0x12345678" url="http://example.com/blocked" referer="" error="" authtime="0" dnstime="1" cattime="12" avscantime="0" fullreqtime="123" device="0" auth="0" ua="Mozilla/5.0" exceptions=""'</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'system-logs',</span>
+<span class="cstat-no" title="statement not covered" >    name: 'System Logs',</span>
+<span class="cstat-no" title="statement not covered" >    icon: '🖥️',</span>
+<span class="cstat-no" title="statement not covered" >    patterns: [</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'syslog',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Standard Syslog',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'RFC3164 syslog format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;time&gt;[^ ]* [^ ]* [^ ]*) (?&lt;host&gt;[^ ]*) (?&lt;ident&gt;[a-zA-Z0-9_\\/\\.\\-]*)(?:\\[(?&lt;pid&gt;[0-9]+)\\])?(?:[^\\:]*\\:)? *(?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: 'Oct 10 13:55:36 myhost sshd[1234]: Failed password for invalid user admin from 192.168.1.100 port 22 ssh2'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'auth-log',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Auth.log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Linux authentication log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;time&gt;[^ ]* [^ ]* [^ ]*) (?&lt;host&gt;[^ ]*) (?&lt;service&gt;[^\\[]*)(\\[(?&lt;pid&gt;[0-9]+)\\])?: (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: 'Oct 10 13:55:36 server sudo[12345]: user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/bin/ls'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'kern-log',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Kernel Log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Linux kernel log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;time&gt;[^ ]* [^ ]* [^ ]*) (?&lt;host&gt;[^ ]*) kernel: \\[(?&lt;timestamp&gt;[^\\]]+)\\] (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: 'Oct 10 13:55:36 server kernel: [12345.678901] USB disconnect, address 1'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'windows-event',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Windows Event Log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Microsoft Windows Event Log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) MSWinEventLog\\t(?&lt;log_level&gt;\\d+)\\t(?&lt;log_source&gt;[^\\t]+)\\t(?&lt;event_id&gt;\\d+)\\t(?&lt;date&gt;[^\\t]+)\\t(?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 13:55:36 windows-server MSWinEventLog	1	Security	4624	Oct 10 2023 13:55:36	An account was successfully logged on.'</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'application-logs',</span>
+<span class="cstat-no" title="statement not covered" >    name: 'Application Logs',</span>
+<span class="cstat-no" title="statement not covered" >    icon: '📱',</span>
+<span class="cstat-no" title="statement not covered" >    patterns: [</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'json-log',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'JSON Structured',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Structured JSON application logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;log&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '{"timestamp":"2023-01-01T12:00:00Z","level":"INFO","message":"Application started","service":"web-server","request_id":"abc123"}'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'docker-log',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Docker Container',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Docker container log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;time&gt;[^ ]+) (?&lt;container_id&gt;[^ ]+) (?&lt;container_name&gt;[^ ]+): (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%Y-%m-%dT%H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '2023-01-01T12:00:00.123456Z a1b2c3d4e5f6 web-server: Starting application on port 8080'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'k8s-log',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Kubernetes Pod',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Kubernetes pod log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;time&gt;[^ ]+) (?&lt;stream&gt;[^ ]+) (?&lt;log_type&gt;[^ ]+) (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%Y-%m-%dT%H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '2023-01-01T12:00:00.123456Z stdout F {"level":"info","msg":"Server started","port":8080}'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'splunk',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'Splunk',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'Splunk Enterprise logs',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^&lt;(?&lt;pri&gt;\\d+)&gt;(?&lt;time&gt;[^ ]+ [^ ]+ [^ ]+) (?&lt;hostname&gt;[^ ]+) (?&lt;process&gt;[^:]+): (?&lt;component&gt;[^ ]+) - - \\[(?&lt;req_time&gt;[^\\]]+)\\] "(?&lt;request&gt;[^"]*)" (?&lt;status&gt;\\d+) (?&lt;bytes&gt;\\d+) - - - (?&lt;duration&gt;\\d+)ms$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%b %d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '&lt;134&gt;Oct 10 13:55:36 splunk-server splunkd: HttpListener - - [10/Oct/2023:13:55:36.123 +0000] "GET /services/server/info HTTP/1.1" 200 1234 - - - 45ms'</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  {</span>
+<span class="cstat-no" title="statement not covered" >    id: 'database-logs',</span>
+<span class="cstat-no" title="statement not covered" >    name: 'Database Logs',</span>
+<span class="cstat-no" title="statement not covered" >    icon: '🗄️',</span>
+<span class="cstat-no" title="statement not covered" >    patterns: [</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'mysql-error',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'MySQL Error Log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'MySQL database error log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;time&gt;[^ ]* [^ ]*) (?&lt;thread_id&gt;[^ ]*) \\[(?&lt;level&gt;[^\\]]+)\\] (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%Y-%m-%d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '2023-01-01 12:00:00 123 [ERROR] Access denied for user \'root\'@\'localhost\' (using password: YES)'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'postgresql-log',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'PostgreSQL Log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'PostgreSQL database log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;time&gt;[^ ]* [^ ]*) \\[(?&lt;pid&gt;[0-9]+)\\] (?&lt;level&gt;[^:]*): (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%Y-%m-%d %H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '2023-01-01 12:00:00 [1234] ERROR: relation "users" does not exist at character 15'</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      {</span>
+<span class="cstat-no" title="statement not covered" >        id: 'mongodb-log',</span>
+<span class="cstat-no" title="statement not covered" >        name: 'MongoDB Log',</span>
+<span class="cstat-no" title="statement not covered" >        description: 'MongoDB database log format',</span>
+<span class="cstat-no" title="statement not covered" >        regex: '^(?&lt;time&gt;[^ ]+) (?&lt;severity&gt;[^ ]+) (?&lt;component&gt;[^ ]+) \\[(?&lt;context&gt;[^\\]]+)\\] (?&lt;message&gt;.*)$',</span>
+<span class="cstat-no" title="statement not covered" >        timeFormat: '%Y-%m-%dT%H:%M:%S',</span>
+<span class="cstat-no" title="statement not covered" >        testString: '2023-01-01T12:00:00.123+0000 I NETWORK [listener] connection accepted from 127.0.0.1:54321 #1 (1 connection now open)'</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    ]</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >];</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >async function testParser(pattern) {</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    console.log(`Testing ${pattern.name}...`);</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    const payload = {</span>
+<span class="cstat-no" title="statement not covered" >      regex: `/${pattern.regex}/`,</span>
+<span class="cstat-no" title="statement not covered" >      testString: pattern.testString</span>
+<span class="cstat-no" title="statement not covered" >    };</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    if (pattern.timeFormat &amp;&amp; pattern.timeFormat.trim()) {</span>
+<span class="cstat-no" title="statement not covered" >      payload.timeFormat = pattern.timeFormat;</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    const response = await axios.post(API_BASE_URL, payload, {</span>
+<span class="cstat-no" title="statement not covered" >      headers: {</span>
+<span class="cstat-no" title="statement not covered" >        'Content-Type': 'application/json',</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      timeout: 15000</span>
+<span class="cstat-no" title="statement not covered" >    });</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    const result = response.data.result;</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    // Validate the response</span>
+<span class="cstat-no" title="statement not covered" >    if (!result) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error('No result returned from API');</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    if (result.errors &amp;&amp; result.errors.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`  ⚠️  Warnings: ${result.errors.join(', ')}`);</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    if (result.parsed &amp;&amp; Object.keys(result.parsed).length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`  ✅ Success: ${Object.keys(result.parsed).length} fields extracted`);</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`     Fields: ${Object.keys(result.parsed).join(', ')}`);</span>
+<span class="cstat-no" title="statement not covered" >      </span>
+<span class="cstat-no" title="statement not covered" >      if (result.parsed_time) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log(`     Parsed time: ${result.parsed_time}`);</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >      </span>
+<span class="cstat-no" title="statement not covered" >      return { success: true, pattern, result };</span>
+<span class="cstat-no" title="statement not covered" >    } else {</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`  ❌ Failed: No fields extracted`);</span>
+<span class="cstat-no" title="statement not covered" >      return { success: false, pattern, error: 'No fields extracted', result };</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
+<span class="cstat-no" title="statement not covered" >    console.log(`  ❌ Error: ${error.message}`);</span>
+<span class="cstat-no" title="statement not covered" >    return { success: false, pattern, error: error.message };</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >async function validateAllParsers() {</span>
+<span class="cstat-no" title="statement not covered" >  console.log('🧪 Starting comprehensive parser validation...\n');</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  const results = [];</span>
+<span class="cstat-no" title="statement not covered" >  const failedParsers = [];</span>
+<span class="cstat-no" title="statement not covered" >  let totalParsers = 0;</span>
+<span class="cstat-no" title="statement not covered" >  let successfulParsers = 0;</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  for (const category of parserLibrary) {</span>
+<span class="cstat-no" title="statement not covered" >    console.log(`\n📂 ${category.icon} ${category.name}`);</span>
+<span class="cstat-no" title="statement not covered" >    console.log('─'.repeat(60));</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    for (const pattern of category.patterns) {</span>
+<span class="cstat-no" title="statement not covered" >      totalParsers++;</span>
+<span class="cstat-no" title="statement not covered" >      const result = await testParser(pattern);</span>
+<span class="cstat-no" title="statement not covered" >      results.push(result);</span>
+<span class="cstat-no" title="statement not covered" >      </span>
+<span class="cstat-no" title="statement not covered" >      if (result.success) {</span>
+<span class="cstat-no" title="statement not covered" >        successfulParsers++;</span>
+<span class="cstat-no" title="statement not covered" >      } else {</span>
+<span class="cstat-no" title="statement not covered" >        failedParsers.push(result);</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >      </span>
+<span class="cstat-no" title="statement not covered" >      // Add a small delay to avoid overwhelming the API</span>
+<span class="cstat-no" title="statement not covered" >      await new Promise(resolve =&gt; setTimeout(resolve, 1000));</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  // Generate summary report</span>
+<span class="cstat-no" title="statement not covered" >  console.log('\n' + '='.repeat(80));</span>
+<span class="cstat-no" title="statement not covered" >  console.log('📊 COMPREHENSIVE VALIDATION SUMMARY');</span>
+<span class="cstat-no" title="statement not covered" >  console.log('='.repeat(80));</span>
+<span class="cstat-no" title="statement not covered" >  console.log(`Total parsers tested: ${totalParsers}`);</span>
+<span class="cstat-no" title="statement not covered" >  console.log(`Successful: ${successfulParsers}`);</span>
+<span class="cstat-no" title="statement not covered" >  console.log(`Failed: ${totalParsers - successfulParsers}`);</span>
+<span class="cstat-no" title="statement not covered" >  console.log(`Success rate: ${((successfulParsers / totalParsers) * 100).toFixed(1)}%`);</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  // List failed parsers with detailed analysis</span>
+<span class="cstat-no" title="statement not covered" >  if (failedParsers.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >    console.log('\n❌ FAILED PARSERS ANALYSIS:');</span>
+<span class="cstat-no" title="statement not covered" >    console.log('─'.repeat(60));</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    failedParsers.forEach((failed, index) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`\n${index + 1}. ${failed.pattern.name} (${failed.pattern.id})`);</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`   Category: ${failed.pattern.description}`);</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`   Error: ${failed.error}`);</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`   Regex: ${failed.pattern.regex}`);</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`   Time Format: ${failed.pattern.timeFormat || 'None'}`);</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`   Test String: ${failed.pattern.testString.substring(0, 100)}...`);</span>
+<span class="cstat-no" title="statement not covered" >      </span>
+<span class="cstat-no" title="statement not covered" >      // Suggest fixes based on error type</span>
+<span class="cstat-no" title="statement not covered" >      if (failed.error.includes('500')) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log(`   🔧 Suggested Fix: Simplify regex pattern - may be too complex for API`);</span>
+<span class="cstat-no" title="statement not covered" >      } else if (failed.error.includes('time format')) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log(`   🔧 Suggested Fix: Remove or correct time format specification`);</span>
+<span class="cstat-no" title="statement not covered" >      } else if (failed.error.includes('No fields extracted')) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log(`   🔧 Suggested Fix: Check regex pattern matches test string`);</span>
+<span class="cstat-no" title="statement not covered" >      } else if (failed.error.includes('timeout')) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log(`   🔧 Suggested Fix: Simplify regex pattern to reduce processing time`);</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    });</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    console.log('\n🛠️  RECOMMENDED ACTIONS:');</span>
+<span class="cstat-no" title="statement not covered" >    console.log('─'.repeat(60));</span>
+<span class="cstat-no" title="statement not covered" >    console.log('1. Fix the failed parsers listed above');</span>
+<span class="cstat-no" title="statement not covered" >    console.log('2. Test each fix individually before running full validation');</span>
+<span class="cstat-no" title="statement not covered" >    console.log('3. Consider breaking complex patterns into simpler components');</span>
+<span class="cstat-no" title="statement not covered" >    console.log('4. Ensure test strings match the expected log format');</span>
+<span class="cstat-no" title="statement not covered" >    console.log('5. Remove problematic time formats if field extraction is more important');</span>
+<span class="cstat-no" title="statement not covered" >  } else {</span>
+<span class="cstat-no" title="statement not covered" >    console.log('\n🎉 ALL PARSERS PASSED! 100% SUCCESS RATE!');</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  // Save detailed results to file</span>
+<span class="cstat-no" title="statement not covered" >  const reportData = {</span>
+<span class="cstat-no" title="statement not covered" >    timestamp: new Date().toISOString(),</span>
+<span class="cstat-no" title="statement not covered" >    summary: {</span>
+<span class="cstat-no" title="statement not covered" >      total: totalParsers,</span>
+<span class="cstat-no" title="statement not covered" >      successful: successfulParsers,</span>
+<span class="cstat-no" title="statement not covered" >      failed: totalParsers - successfulParsers,</span>
+<span class="cstat-no" title="statement not covered" >      successRate: ((successfulParsers / totalParsers) * 100).toFixed(1)</span>
+<span class="cstat-no" title="statement not covered" >    },</span>
+<span class="cstat-no" title="statement not covered" >    results: results,</span>
+<span class="cstat-no" title="statement not covered" >    failedParsers: failedParsers</span>
+<span class="cstat-no" title="statement not covered" >  };</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  fs.writeFileSync('comprehensive-parser-validation-report.json', JSON.stringify(reportData, null, 2));</span>
+<span class="cstat-no" title="statement not covered" >  console.log('\n📄 Detailed report saved to: comprehensive-parser-validation-report.json');</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  return results;</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >// Run the validation</span>
+<span class="cstat-no" title="statement not covered" >validateAllParsers()</span>
+<span class="cstat-no" title="statement not covered" >  .then((results) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    const failedCount = results.filter(r =&gt; !r.success).length;</span>
+<span class="cstat-no" title="statement not covered" >    console.log('\n✅ Comprehensive validation complete!');</span>
+<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" >    if (failedCount === 0) {</span>
+<span class="cstat-no" title="statement not covered" >      console.log('🎯 TARGET ACHIEVED: 100% parser success rate!');</span>
+<span class="cstat-no" title="statement not covered" >      process.exit(0);</span>
+<span class="cstat-no" title="statement not covered" >    } else {</span>
+<span class="cstat-no" title="statement not covered" >      console.log(`⚠️  ${failedCount} parsers need fixes to achieve 100% success rate.`);</span>
+<span class="cstat-no" title="statement not covered" >      process.exit(1);</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  })</span>
+<span class="cstat-no" title="statement not covered" >  .catch(error =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    console.error('\n❌ Validation failed:', error);</span>
+<span class="cstat-no" title="statement not covered" >    process.exit(1);</span>
+<span class="cstat-no" title="statement not covered" >  });</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export { validateAllParsers, testParser }; </span></pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-05-25T22:58:57.947Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    
