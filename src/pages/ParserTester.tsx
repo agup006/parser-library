@@ -36,6 +36,7 @@ const ParserTester: React.FC = () => {
   const [result, setResult] = useState<ParsedResult | null>(null);
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['web-logs', 'cisco-network']));
   const [selectedPattern, setSelectedPattern] = useState<string>('apache-common');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Comprehensive Fluent Bit Parser Library based on vendor CSV data
   const parserLibrary: PatternCategory[] = [
@@ -987,6 +988,56 @@ const ParserTester: React.FC = () => {
     }
   };
 
+  // Filter parsers based on search query
+  const filteredParserLibrary = parserLibrary.map(category => ({
+    ...category,
+    patterns: category.patterns.filter(pattern => {
+      if (!searchQuery.trim()) return true;
+      
+      const query = searchQuery.toLowerCase();
+      return (
+        pattern.name.toLowerCase().includes(query) ||
+        pattern.description.toLowerCase().includes(query) ||
+        category.name.toLowerCase().includes(query)
+      );
+    })
+  })).filter(category => category.patterns.length > 0);
+
+  // Auto-expand categories that have matching patterns when searching
+  const getExpandedCategoriesForSearch = () => {
+    if (!searchQuery.trim()) return expandedCategories;
+    
+    const expandedForSearch = new Set(expandedCategories);
+    filteredParserLibrary.forEach(category => {
+      if (category.patterns.length > 0) {
+        expandedForSearch.add(category.id);
+      }
+    });
+    return expandedForSearch;
+  };
+
+  // Highlight search matches in text
+  const highlightSearchMatch = (text: string, query: string) => {
+    if (!query.trim()) return text;
+    
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const parts = text.split(regex);
+    
+    return parts.map((part, index) => 
+      regex.test(part) ? (
+        <span key={index} style={{ 
+          background: '#fef3c7', 
+          color: '#92400e',
+          fontWeight: '600',
+          padding: '0.125rem 0.25rem',
+          borderRadius: '0.25rem'
+        }}>
+          {part}
+        </span>
+      ) : part
+    );
+  };
+
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #dbeafe 0%, #ffffff 50%, #e0e7ff 100%)', display: 'flex' }}>
       {/* Sidebar - Parser Library */}
@@ -1011,7 +1062,114 @@ const ParserTester: React.FC = () => {
             📚 Parser Library
           </h2>
           
-          {parserLibrary.map((category) => (
+          {/* Search Bar */}
+          <div style={{ marginBottom: '1rem' }}>
+            <div style={{ position: 'relative' }}>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search parsers..."
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem 0.5rem 2rem',
+                  fontSize: '0.875rem',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '0.375rem',
+                  background: '#f9fafb',
+                  color: '#374151',
+                  outline: 'none',
+                  transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#3b82f6';
+                  e.target.style.boxShadow = '0 0 0 1px #3b82f6';
+                  e.target.style.background = '#ffffff';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#d1d5db';
+                  e.target.style.boxShadow = 'none';
+                  e.target.style.background = '#f9fafb';
+                }}
+              />
+              <div style={{
+                position: 'absolute',
+                left: '0.75rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: '#9ca3af',
+                fontSize: '0.875rem',
+                pointerEvents: 'none'
+              }}>
+                🔍
+              </div>
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  style={{
+                    position: 'absolute',
+                    right: '0.5rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    color: '#9ca3af',
+                    cursor: 'pointer',
+                    fontSize: '0.875rem',
+                    padding: '0.25rem'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#374151'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+            {searchQuery && (
+              <div style={{ 
+                marginTop: '0.5rem', 
+                fontSize: '0.75rem', 
+                color: '#6b7280' 
+              }}>
+                {filteredParserLibrary.reduce((total, category) => total + category.patterns.length, 0)} parser(s) found
+              </div>
+            )}
+          </div>
+          
+          {filteredParserLibrary.length === 0 && searchQuery ? (
+            <div style={{ 
+              textAlign: 'center', 
+              padding: '2rem 1rem',
+              color: '#6b7280'
+            }}>
+              <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🔍</div>
+              <div style={{ fontSize: '0.875rem', fontWeight: '500', marginBottom: '0.25rem' }}>
+                No parsers found
+              </div>
+              <div style={{ fontSize: '0.75rem' }}>
+                Try a different search term
+              </div>
+              <button
+                onClick={() => setSearchQuery('')}
+                style={{
+                  marginTop: '1rem',
+                  padding: '0.5rem 1rem',
+                  background: '#f3f4f6',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '0.375rem',
+                  fontSize: '0.75rem',
+                  color: '#374151',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = '#e5e7eb'}
+                onMouseLeave={(e) => e.currentTarget.style.background = '#f3f4f6'}
+              >
+                Clear search
+              </button>
+            </div>
+          ) : null}
+          
+          {filteredParserLibrary.map((category) => (
             <div key={category.id} style={{ marginBottom: '0.5rem' }}>
               {/* Category Header */}
               <button
@@ -1035,14 +1193,24 @@ const ParserTester: React.FC = () => {
                 onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
                 <span style={{ marginRight: '0.5rem', fontSize: '1rem' }}>
-                  {expandedCategories.has(category.id) ? '▼' : '▶'}
+                  {getExpandedCategoriesForSearch().has(category.id) ? '▼' : '▶'}
                 </span>
                 <span style={{ marginRight: '0.5rem' }}>{category.icon}</span>
                 <span>{category.name}</span>
+                <span style={{ 
+                  marginLeft: 'auto', 
+                  fontSize: '0.75rem', 
+                  color: '#9ca3af',
+                  background: '#f3f4f6',
+                  padding: '0.125rem 0.375rem',
+                  borderRadius: '0.25rem'
+                }}>
+                  {category.patterns.length}
+                </span>
               </button>
               
               {/* Category Patterns */}
-              {expandedCategories.has(category.id) && (
+              {getExpandedCategoriesForSearch().has(category.id) && (
                 <div style={{ marginLeft: '1rem', marginTop: '0.25rem' }}>
                   {category.patterns.map((pattern) => (
                     <button
@@ -1076,10 +1244,10 @@ const ParserTester: React.FC = () => {
                       }}
                     >
                       <div style={{ fontWeight: '500', marginBottom: '0.125rem' }}>
-                        {pattern.name}
+                        {highlightSearchMatch(pattern.name, searchQuery)}
                       </div>
                       <div style={{ fontSize: '0.7rem', opacity: 0.8 }}>
-                        {pattern.description}
+                        {highlightSearchMatch(pattern.description, searchQuery)}
                       </div>
                     </button>
                   ))}
