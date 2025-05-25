@@ -1,0 +1,582 @@
+Vendor,Parser Name,Format,Regex,Time Key,Time Format,Full Parser Configuration
+Cisco ASA,cisco_asa,regex,^%ASA-(?<pri>\d+)-(?<id>\d+):\s+(?<message>.*)$,time,%b %d %Y %H:%M:%S,"[PARSER]
+    Name        cisco_asa
+    Format      regex
+    Regex       ^%ASA-(?<pri>\d+)-(?<id>\d+):\s+(?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %Y %H:%M:%S"
+Palo Alto Networks,paloalto,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$,time,%b %d %Y %H:%M:%S,"[PARSER]
+    Name        paloalto
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %Y %H:%M:%S"
+Fortinet FortiGate,fortinet_fortigate,regex,"^date=(?<fdate>[^ ]+)\s+time=(?<ftime>[^ ]+)\s+logid=""(?<logid>[^""]+)""\s+type=""(?<type>[^""]+)""\s+subtype=""(?<subtype>[^""]+)""\s+(?<message>.*)$",fdate ftime,%Y-%m-%d %H:%M:%S,"[PARSER]
+    Name        fortinet_fortigate
+    Format      regex
+    Regex       ^date=(?<fdate>[^ ]+)\s+time=(?<ftime>[^ ]+)\s+logid=""(?<logid>[^""]+)""\s+type=""(?<type>[^""]+)""\s+subtype=""(?<subtype>[^""]+)""\s+(?<message>.*)$
+    Time_Key    fdate ftime
+    Time_Format %Y-%m-%d %H:%M:%S"
+Checkpoint,checkpoint,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<date>[^ ]+) (?<logtime>[^ ]+) (?<src_ip>[^ ]+) product: (?<product>[^;]+);\s*(?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        checkpoint
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<date>[^ ]+) (?<logtime>[^ ]+) (?<src_ip>[^ ]+) product: (?<product>[^;]+);\s*(?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+F5,f5,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^\[]+)\[(?<pid>\d+)\]: (?<msgid>[^:]+):\s*(?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        f5
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^\[]+)\[(?<pid>\d+)\]: (?<msgid>[^:]+):\s*(?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Juniper,juniper,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^\[]+)\[(?<pid>\d+)\]: (?<event>[^:]+): (?<message>.*)$,time,%b %d %Y %H:%M:%S,"[PARSER]
+    Name        juniper
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^\[]+)\[(?<pid>\d+)\]: (?<event>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %Y %H:%M:%S"
+Arista,arista_json,json,,timestamp,%Y-%m-%dT%H:%M:%S.%LZ,"[PARSER]
+    Name        arista_json
+    Format      json
+    Time_Key    timestamp
+    Time_Format %Y-%m-%dT%H:%M:%S.%LZ"
+Barracuda,barracuda,regex,^(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<level>[^:]+): (?<message>.*)$,time,%b %d %Y %H:%M:%S,"[PARSER]
+    Name        barracuda
+    Format      regex
+    Regex       ^(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<level>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %Y %H:%M:%S"
+Sophos,sophos,regex,^(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %Y %H:%M:%S,"[PARSER]
+    Name        sophos
+    Format      regex
+    Regex       ^(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %Y %H:%M:%S"
+Cisco IOS,cisco_ios,regex,^<(?<pri>\d+)>(?<seq>\d+): (?<time>[^:]+): %(?<facility>[^-]+)-(?<severity>\d+)-(?<mnemonic>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_ios
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<seq>\d+): (?<time>[^:]+): %(?<facility>[^-]+)-(?<severity>\d+)-(?<mnemonic>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco Meraki,cisco_meraki,regex,^<(?<pri>\d+)>(?<version>\d+) (?<timestamp>[^ ]+) (?<device_name>[^ ]+) (?<type>[^ ]+) (?<event_type>[^ ]+) (?<message>.*)$,timestamp,%Y-%m-%dT%H:%M:%SZ,"[PARSER]
+    Name        cisco_meraki
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<version>\d+) (?<timestamp>[^ ]+) (?<device_name>[^ ]+) (?<type>[^ ]+) (?<event_type>[^ ]+) (?<message>.*)$
+    Time_Key    timestamp
+    Time_Format %Y-%m-%dT%H:%M:%SZ"
+Citrix NetScaler,citrix_netscaler,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<module>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        citrix_netscaler
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<module>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Imperva WAF,imperva_waf,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        imperva_waf
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Zscaler,zscaler,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        zscaler
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+McAfee,mcafee,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        mcafee
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Trend Micro,trendmicro,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        trendmicro
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Forcepoint,forcepoint,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        forcepoint
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco Firepower,cisco_firepower,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_firepower
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco ISE,cisco_ise,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^ ]+) (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_ise
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^ ]+) (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco ACI,cisco_aci,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<device>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^ ]+) (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_aci
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<device>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^ ]+) (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco UCS,cisco_ucs,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^ ]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_ucs
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^ ]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco WLC,cisco_wlc,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) \*(?<log_time>[^:]+): %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_wlc
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) \*(?<log_time>[^:]+): %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco Nexus,cisco_nexus,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_nexus
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco Catalyst,cisco_catalyst,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_catalyst
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco Umbrella,cisco_umbrella,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_umbrella
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco Stealthwatch,cisco_stealthwatch,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_stealthwatch
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco Duo,cisco_duo,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_duo
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cisco Tetration,cisco_tetration,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cisco_tetration
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+VMWare,vmware_esxi,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<level>[^ ]+) (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        vmware_esxi
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<level>[^ ]+) (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Dell,dell_idrac,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        dell_idrac
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+HPe,hpe_ilo,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        hpe_ilo
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+IBM,ibm_imm,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        ibm_imm
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Ubiquiti,ubiquiti,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        ubiquiti
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Mikrotik,mikrotik,regex,"^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<topic>[^,]+),(?<severity>[^:]+): (?<message>.*)$",time,%b %d %H:%M:%S,"[PARSER]
+    Name        mikrotik
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<topic>[^,]+),(?<severity>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Ruckus,ruckus,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        ruckus
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Aruba,aruba,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: <(?<component>[^>]+)> <(?<severity>[^>]+)> (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        aruba
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: <(?<component>[^>]+)> <(?<severity>[^>]+)> (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Avaya,avaya,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        avaya
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Polycom,polycom,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<subcomponent>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        polycom
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<subcomponent>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Brocade,brocade,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<event>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        brocade
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<event>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Alcatel,alcatel,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        alcatel
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Riverbed,riverbed,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        riverbed
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+NetApp,netapp,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        netapp
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+PureStorage,purestorage,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): \[(?<severity>[^\]]+)\] (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        purestorage
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): \[(?<severity>[^\]]+)\] (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+InfoBlox,infoblox,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        infoblox
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Radware,radware,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        radware
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+A10Networks,a10networks,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        a10networks
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+HAProxy,haproxy,regex,"^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: (?<client_ip>[^:]+):(?<client_port>\d+) \[(?<accept_date>[^\]]+)\] (?<frontend_name>[^ ]+) (?<backend_name>[^ ]+) (?<timers>[^ ]+) (?<status_code>\d+) (?<bytes_read>\d+) (?<captured_request_cookie>[^ ]+) (?<captured_response_cookie>[^ ]+) (?<termination_state>[^ ]+) (?<actconn>[^ ]+) (?<request>[^""]*)$",time,%b %d %H:%M:%S,"[PARSER]
+    Name        haproxy
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: (?<client_ip>[^:]+):(?<client_port>\d+) \[(?<accept_date>[^\]]+)\] (?<frontend_name>[^ ]+) (?<backend_name>[^ ]+) (?<timers>[^ ]+) (?<status_code>\d+) (?<bytes_read>\d+) (?<captured_request_cookie>[^ ]+) (?<captured_response_cookie>[^ ]+) (?<termination_state>[^ ]+) (?<actconn>[^ ]+) (?<request>[^""]*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Pfsense,pfsense,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        pfsense
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Darktrace,darktrace,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        darktrace
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+FireEye,fireeye,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        fireeye
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Kaspersky,kaspersky,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        kaspersky
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cylance,cylance,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cylance
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+CyberArk,cyberark,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cyberark
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+BeyondTrust,beyondtrust,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        beyondtrust
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Thycotic,thycotic,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        thycotic
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Thales,thales,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        thales
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Wallix,wallix,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        wallix
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Proofpoint,proofpoint,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        proofpoint
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Tenable,tenable,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        tenable
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Tanium,tanium,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        tanium
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Vectra,vectra,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        vectra
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Varonis,varonis,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        varonis
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Veeam,veeam,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        veeam
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Splunk,splunk,regex,"^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<component>[^ ]+) - - \[(?<req_time>[^\]]+)\] ""(?<request>[^""]*)"" (?<status>\d+) (?<bytes>\d+) - - - (?<duration>\d+)ms$",time,%b %d %H:%M:%S,"[PARSER]
+    Name        splunk
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<component>[^ ]+) - - \[(?<req_time>[^\]]+)\] ""(?<request>[^""]*)"" (?<status>\d+) (?<bytes>\d+) - - - (?<duration>\d+)ms$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Cohesity,cohesity,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        cohesity
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Nutanix,nutanix,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        nutanix
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Pulse,pulse,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        pulse
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Clearswift,clearswift,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        clearswift
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Ossec,ossec,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): Rule: (?<rule_id>\d+) \(level (?<level>\d+)\) -> '(?<message>.*)'$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        ossec
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): Rule: (?<rule_id>\d+) \(level (?<level>\d+)\) -> '(?<message>.*)'$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Trellix,trellix,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        trellix
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Aviatrix,aviatrix,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        aviatrix
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Broadcom,broadcom,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        broadcom
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Ricoh,ricoh,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        ricoh
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Schneider,schneider,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        schneider
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Raritan,raritan,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        raritan
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Qumulo,qumulo,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        qumulo
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Tintri,tintri,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        tintri
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Spectracom,spectracom,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        spectracom
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Solace,solace,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        solace
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Semperis,semperis,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        semperis
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+SecureAuthIdP,secureauth,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        secureauth
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Netwrix,netwrix,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        netwrix
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Netmotion,netmotion,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        netmotion
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+NetScout,netscout,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        netscout
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Novell,novell,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        novell
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Microfocus,microfocus,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        microfocus
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Microsoft,windows_event,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) MSWinEventLog\t(?<log_level>\d+)\t(?<log_source>[^\t]+)\t(?<event_id>\d+)\t(?<date>[^\t]+)\t(?<event_code>\d+)\t(?<source>[^\t]+)\t(?<user>[^\t]+)\t(?<sid>[^\t]+)\t(?<category>[^\t]+)\t(?<computer>[^\t]+)\t(?<event_type>[^\t]+)\t(?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        windows_event
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) MSWinEventLog\t(?<log_level>\d+)\t(?<log_source>[^\t]+)\t(?<event_id>\d+)\t(?<date>[^\t]+)\t(?<event_code>\d+)\t(?<source>[^\t]+)\t(?<user>[^\t]+)\t(?<sid>[^\t]+)\t(?<category>[^\t]+)\t(?<computer>[^\t]+)\t(?<event_type>[^\t]+)\t(?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Liveaction,liveaction,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        liveaction
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+ISC,isc_bind,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        isc_bind
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+GitHub,github,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        github
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Epic,epic,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        epic
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Buffalo,buffalo,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        buffalo
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Powertech,powertech,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        powertech
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+XYPro,xypro,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        xypro
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+Alsid,alsid,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        alsid
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+AVI,avi,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        avi
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\|(?<vendor>[^|]+)\|(?<product>[^|]+)\|(?<product_version>[^|]+)\|(?<event_id>[^|]+)\|(?<event_name>[^|]+)\|(?<severity>[^|]+)\|(?<extension>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"
+syslog-ng,syslog_ng,regex,^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: (?<message>.*)$,time,%b %d %H:%M:%S,"[PARSER]
+    Name        syslog_ng
+    Format      regex
+    Regex       ^<(?<pri>\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\[]+)\[(?<pid>\d+)\]: (?<message>.*)$
+    Time_Key    time
+    Time_Format %b %d %H:%M:%S"

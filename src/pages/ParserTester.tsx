@@ -34,11 +34,11 @@ const ParserTester: React.FC = () => {
   const [timeFormat, setTimeFormat] = useState('%d/%b/%Y:%H:%M:%S %z');
   const [testString, setTestString] = useState('127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326 "http://www.example.com/start.html" "Mozilla/4.08 [en] (Win98; I ;Nav)"');
   const [result, setResult] = useState<ParsedResult | null>(null);
-  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['web-logs']));
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['web-logs', 'cisco-network']));
   const [selectedPattern, setSelectedPattern] = useState<string>('apache-common');
 
-  // Parser pattern library
-  const patternLibrary: PatternCategory[] = [
+  // Comprehensive Fluent Bit Parser Library based on vendor CSV data
+  const parserLibrary: PatternCategory[] = [
     {
       id: 'web-logs',
       name: 'Web Logs',
@@ -75,6 +75,140 @@ const ParserTester: React.FC = () => {
           regex: '/^(?<date>[^ ]+) (?<time>[^ ]+) (?<s_ip>[^ ]+) (?<cs_method>[^ ]+) (?<cs_uri_stem>[^ ]+) (?<cs_uri_query>[^ ]+) (?<s_port>[^ ]+) (?<cs_username>[^ ]+) (?<c_ip>[^ ]+) (?<cs_user_agent>[^ ]+) (?<sc_status>[^ ]+) (?<sc_substatus>[^ ]+) (?<sc_win32_status>[^ ]+) (?<time_taken>[^ ]+)$/',
           timeFormat: '',
           testString: '2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0+(compatible;+MSIE+9.0;+Windows+NT+6.1) 200 0 0 1234'
+        },
+        {
+          id: 'haproxy',
+          name: 'HAProxy',
+          description: 'HAProxy load balancer log format',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<client_ip>[^:]+):(?<client_port>\\d+) \\[(?<accept_date>[^\\]]+)\\] (?<frontend_name>[^ ]+) (?<backend_name>[^ ]+) (?<timers>[^ ]+) (?<status_code>\\d+) (?<bytes_read>\\d+) (?<captured_request_cookie>[^ ]+) (?<captured_response_cookie>[^ ]+) (?<termination_state>[^ ]+) (?<actconn>[^ ]+) (?<request>[^\"]*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 loadbalancer haproxy[1234]: 192.168.1.100:54321 [10/Oct/2000:13:55:36.123] frontend backend 0/0/1/2/3 200 1234 - - ---- 1/1/1/1/0 0/0 "GET /api/health HTTP/1.1"'
+        }
+      ]
+    },
+    {
+      id: 'cisco-network',
+      name: 'Cisco Network',
+      icon: '🔧',
+      patterns: [
+        {
+          id: 'cisco-asa',
+          name: 'Cisco ASA',
+          description: 'Cisco Adaptive Security Appliance logs',
+          regex: '/^%ASA-(?<pri>\\d+)-(?<id>\\d+):\\s+(?<message>.*)$/',
+          timeFormat: '%b %d %Y %H:%M:%S',
+          testString: '%ASA-6-302013: Built inbound TCP connection 12345 for outside:192.168.1.100/1234 (192.168.1.100/1234) to inside:10.0.0.1/80 (10.0.0.1/80)'
+        },
+        {
+          id: 'cisco-ios',
+          name: 'Cisco IOS',
+          description: 'Cisco IOS router/switch logs',
+          regex: '/^<(?<pri>\\d+)>(?<seq>\\d+): (?<time>[^:]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.1.100)'
+        },
+        {
+          id: 'cisco-meraki',
+          name: 'Cisco Meraki',
+          description: 'Cisco Meraki cloud-managed device logs',
+          regex: '/^<(?<pri>\\d+)>(?<version>\\d+) (?<timestamp>[^ ]+) (?<device_name>[^ ]+) (?<type>[^ ]+) (?<event_type>[^ ]+) (?<message>.*)$/',
+          timeFormat: '%Y-%m-%dT%H:%M:%SZ',
+          testString: '<134>1 2023-01-01T12:00:00Z MX84 urls src=192.168.1.100 dst=example.com request: GET example.com/'
+        },
+        {
+          id: 'cisco-firepower',
+          name: 'Cisco Firepower',
+          description: 'Cisco Firepower Threat Defense logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 firepower SFIMS: [Primary Detection Engine (a8c4e3b2-1234-5678-9abc-def012345678)] Connection Type: Start, User: N/A'
+        },
+        {
+          id: 'cisco-ise',
+          name: 'Cisco ISE',
+          description: 'Cisco Identity Services Engine logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^ ]+) (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 ise-server CISE_RADIUS_Accounting 0000123456 1 0 2023-01-01 12:00:00.123 +00:00 0000123456 5200 NOTICE'
+        },
+        {
+          id: 'cisco-nexus',
+          name: 'Cisco Nexus',
+          description: 'Cisco Nexus data center switch logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<189>Oct 10 13:55:36 nexus-switch %ETHPORT-5-IF_UP: Interface Ethernet1/1 is up'
+        },
+        {
+          id: 'cisco-wlc',
+          name: 'Cisco WLC',
+          description: 'Cisco Wireless LAN Controller logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) \\*(?<log_time>[^:]+): %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 wlc-controller *Oct 10 13:55:36.123: %DOT11-6-ASSOC: Station 00:11:22:33:44:55 Associated to AP ap-name'
+        },
+        {
+          id: 'cisco-umbrella',
+          name: 'Cisco Umbrella',
+          description: 'Cisco Umbrella DNS security logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 umbrella CEF:0|Cisco|Umbrella|1.0|1|DNS Request Allowed|3|src=192.168.1.100 dst=8.8.8.8 dhost=example.com'
+        }
+      ]
+    },
+    {
+      id: 'security-appliances',
+      name: 'Security Appliances',
+      icon: '🛡️',
+      patterns: [
+        {
+          id: 'palo-alto',
+          name: 'Palo Alto Networks',
+          description: 'Palo Alto Networks firewall logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %Y %H:%M:%S',
+          testString: '<134>Oct 10 2023 13:55:36 pa-firewall 1,2023/01/01 12:00:00,001234567890,TRAFFIC,end,1,2023/01/01 12:00:00,192.168.1.100,10.0.0.1,0.0.0.0,0.0.0.0,rule1,user1,,web-browsing,vsys1,trust,untrust,ethernet1/1,ethernet1/2,forwardAll,2023/01/01 12:00:00,12345,1,80,443,0,0,0x19,tcp,allow,1234,567,890,12,2023/01/01 12:00:00,0,any,0,123456789,0x0,192.168.0.0-192.168.255.255,10.0.0.0-10.255.255.255,0,1,0,policy-deny,0,0,0,0,,pa-firewall,from-policy'
+        },
+        {
+          id: 'fortinet-fortigate',
+          name: 'Fortinet FortiGate',
+          description: 'Fortinet FortiGate firewall logs',
+          regex: '/^date=(?<fdate>[^ ]+)\\s+time=(?<ftime>[^ ]+)\\s+logid="(?<logid>[^"]+)"\\s+type="(?<type>[^"]+)"\\s+subtype="(?<subtype>[^"]+)"\\s+(?<message>.*)$/',
+          timeFormat: '%Y-%m-%d %H:%M:%S',
+          testString: 'date=2023-01-01 time=12:00:00 logid="0000000013" type="traffic" subtype="forward" level="notice" vd="root" eventtime=1672574400 srcip=192.168.1.100 srcport=12345 srcintf="port1" dstip=8.8.8.8 dstport=53 dstintf="port2" policyid=1 sessionid=123456 proto=17 action="accept" policytype="policy" service="DNS" dstcountry="United States" srccountry="Reserved" trandisp="snat" transip=203.0.113.1 transport=12345 duration=1 sentbyte=64 rcvdbyte=80'
+        },
+        {
+          id: 'checkpoint',
+          name: 'Check Point',
+          description: 'Check Point firewall logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<date>[^ ]+) (?<logtime>[^ ]+) (?<src_ip>[^ ]+) product: (?<product>[^;]+);\\s*(?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 checkpoint-gw 10Oct2023 13:55:36 192.168.1.1 product: VPN-1 & FireWall-1; Action="accept"; orig="192.168.1.100"; i/f_dir="inbound"; i/f_name="eth0"; has_accounting="0"; uuid="<12345678-1234-5678-9abc-def012345678>"; product="VPN-1 & FireWall-1"; __policy_id_tag="product=VPN-1 & FireWall-1[db_tag={ABCD1234-5678-90EF-GHIJ-KLMNOPQRSTUV};mgmt=checkpoint-mgmt;date=1697026536;policy_name=Standard]"; rule_name="Web_Access"; rule_uid="{12345678-1234-5678-9abc-def012345678}"; src="192.168.1.100"; dst="203.0.113.1"; proto="6"; service="80"; s_port="54321"'
+        },
+        {
+          id: 'f5-bigip',
+          name: 'F5 BIG-IP',
+          description: 'F5 BIG-IP application delivery controller logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<msgid>[^:]+):\\s*(?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 bigip tmm[12345]: 01260013:4: SSL Handshake failed for TCP 192.168.1.100:54321 -> 10.0.0.1:443'
+        },
+        {
+          id: 'juniper-srx',
+          name: 'Juniper SRX',
+          description: 'Juniper SRX firewall logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<event>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %Y %H:%M:%S',
+          testString: '<134>Oct 10 2023 13:55:36 srx-firewall RT_FLOW[1234]: RT_FLOW_SESSION_CREATE: session created 192.168.1.100/54321->10.0.0.1/80 junos-http None 6 trust-to-untrust trust untrust 1234'
+        },
+        {
+          id: 'sophos-utm',
+          name: 'Sophos UTM',
+          description: 'Sophos Unified Threat Management logs',
+          regex: '/^(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %Y %H:%M:%S',
+          testString: 'Oct 10 2023 13:55:36 sophos-utm httpd: id="0299" severity="info" sys="SecureWeb" sub="http" name="web request blocked" action="blocked" method="GET" srcip="192.168.1.100" dstip="203.0.113.1" user="" ad_domain="" statuscode="403" cached="0" profile="REF_DefaultHTTPProfile" filteraction="REF_DefaultHTTPCFFAction" size="1234" request="0x12345678" url="http://example.com/blocked" referer="" error="" authtime="0" dnstime="1" cattime="12" avscantime="0" fullreqtime="123" device="0" auth="0" ua="Mozilla/5.0" exceptions=""'
         }
       ]
     },
@@ -106,6 +240,14 @@ const ParserTester: React.FC = () => {
           regex: '/^(?<time>[^ ]* [^ ]* [^ ]*) (?<host>[^ ]*) kernel: \\[(?<timestamp>[^\\]]+)\\] (?<message>.*)$/',
           timeFormat: '%b %d %H:%M:%S',
           testString: 'Oct 10 13:55:36 server kernel: [12345.678901] USB disconnect, address 1'
+        },
+        {
+          id: 'windows-event',
+          name: 'Windows Event Log',
+          description: 'Microsoft Windows Event Log format',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) MSWinEventLog\\t(?<log_level>\\d+)\\t(?<log_source>[^\\t]+)\\t(?<event_id>\\d+)\\t(?<date>[^\\t]+)\\t(?<event_code>\\d+)\\t(?<source>[^\\t]+)\\t(?<user>[^\\t]+)\\t(?<sid>[^\\t]+)\\t(?<category>[^\\t]+)\\t(?<computer>[^\\t]+)\\t(?<event_type>[^\\t]+)\\t(?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 windows-server MSWinEventLog	1	Security	4624	Oct 10 2023 13:55:36	4624	Microsoft-Windows-Security-Auditing	N/A	N/A	Logon		WORKSTATION$	Success Audit	WORKSTATION	An account was successfully logged on.'
         }
       ]
     },
@@ -137,6 +279,14 @@ const ParserTester: React.FC = () => {
           regex: '/^(?<time>[^ ]+) (?<stream>[^ ]+) (?<log_type>[^ ]+) (?<message>.*)$/',
           timeFormat: '%Y-%m-%dT%H:%M:%S',
           testString: '2023-01-01T12:00:00.123456Z stdout F {"level":"info","msg":"Server started","port":8080}'
+        },
+        {
+          id: 'splunk',
+          name: 'Splunk',
+          description: 'Splunk Enterprise logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<component>[^ ]+) - - \\[(?<req_time>[^\\]]+)\\] "(?<request>[^"]*)" (?<status>\\d+) (?<bytes>\\d+) - - - (?<duration>\\d+)ms$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 splunk-server splunkd: HttpListener - - [10/Oct/2023:13:55:36.123 +0000] "GET /services/server/info HTTP/1.1" 200 1234 - - - 45ms'
         }
       ]
     },
@@ -170,8 +320,531 @@ const ParserTester: React.FC = () => {
           testString: '2023-01-01T12:00:00.123+0000 I NETWORK [listener] connection accepted from 127.0.0.1:54321 #1 (1 connection now open)'
         }
       ]
-    }
-  ];
+    },
+    {
+      id: 'cloud-security',
+      name: 'Cloud Security',
+      icon: '☁️',
+      patterns: [
+        {
+          id: 'zscaler',
+          name: 'Zscaler',
+          description: 'Zscaler cloud security platform logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 zscaler CEF:0|Zscaler|NSSWeblog|1.0|200|Allowed|2|src=192.168.1.100 dst=203.0.113.1 spt=54321 dpt=80 request=GET example.com/ HTTP/1.1'
+        },
+        {
+          id: 'imperva-waf',
+          name: 'Imperva WAF',
+          description: 'Imperva Web Application Firewall logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 imperva-waf CEF:0|Imperva Inc.|SecureSphere|13.0.0|Alert|Alert|High|act=Blocked src=192.168.1.100 spt=54321 dst=10.0.0.1 dpt=80 cs1Label=Policy cs1=SQL Injection cs2Label=Signature cs2=Generic SQL Injection'
+        },
+        {
+          id: 'cloudflare',
+          name: 'Cloudflare',
+          description: 'Cloudflare CDN and security logs',
+          regex: '/^(?<timestamp>[^ ]+) (?<zone_id>[^ ]+) (?<zone_name>[^ ]+) (?<datetime>[^ ]+) (?<client_ip>[^ ]+) (?<client_country>[^ ]+) (?<client_device_type>[^ ]+) (?<client_ip_class>[^ ]+) (?<client_asn>[^ ]+) (?<client_request_host>[^ ]+) (?<client_request_method>[^ ]+) (?<client_request_uri>[^ ]+) (?<client_request_user_agent>[^ ]+) (?<client_request_referer>[^ ]+) (?<client_ssl_cipher>[^ ]+) (?<client_ssl_protocol>[^ ]+) (?<edge_colo_code>[^ ]+) (?<edge_colo_id>[^ ]+) (?<edge_end_timestamp>[^ ]+) (?<edge_request_host>[^ ]+) (?<edge_response_bytes>[^ ]+) (?<edge_response_compression_ratio>[^ ]+) (?<edge_response_content_type>[^ ]+) (?<edge_response_status>[^ ]+) (?<edge_start_timestamp>[^ ]+) (?<firewall_matches_actions>[^ ]+) (?<firewall_matches_rule_ids>[^ ]+) (?<firewall_matches_sources>[^ ]+) (?<origin_ip>[^ ]+) (?<origin_response_bytes>[^ ]+) (?<origin_response_http_expires>[^ ]+) (?<origin_response_http_last_modified>[^ ]+) (?<origin_response_status>[^ ]+) (?<origin_response_time>[^ ]+) (?<origin_ssl_protocol>[^ ]+) (?<parent_ray_id>[^ ]+) (?<ray_id>[^ ]+) (?<security_level>[^ ]+) (?<waf_action>[^ ]+) (?<waf_flags>[^ ]+) (?<waf_matched_var>[^ ]+) (?<waf_profile>[^ ]+) (?<waf_rule_id>[^ ]+) (?<waf_rule_message>[^ ]+) (?<worker_cpu_time>[^ ]+) (?<worker_status>[^ ]+) (?<worker_subrequest>[^ ]+) (?<worker_subrequest_count>[^ ]+) (?<zone_plan>[^ ]+)$/',
+          timeFormat: '%Y-%m-%dT%H:%M:%SZ',
+          testString: '1672574400 abc123def456 example.com 2023-01-01T12:00:00Z 192.168.1.100 US desktop noRecord 12345 example.com GET /api/data Mozilla/5.0 https://example.com/home TLS_AES_256_GCM_SHA384 TLSv1.3 LAX 123 1672574400123 example.com 1234 1.0 application/json 200 1672574400000 [] [] [] 203.0.113.1 567 - - 200 45 TLSv1.3 - abc123def456ghi789 medium unknown 0 - default - - 0 ok false 0 free'
+        }
+      ]
+    },
+    {
+      id: 'endpoint-security',
+      name: 'Endpoint Security',
+      icon: '🔒',
+      patterns: [
+        {
+          id: 'crowdstrike',
+          name: 'CrowdStrike Falcon',
+          description: 'CrowdStrike Falcon endpoint protection logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 crowdstrike CEF:0|CrowdStrike|FalconHost|1.0|DetectionSummaryEvent|Detection Summary|High|src=192.168.1.100 duser=john.doe cs1Label=DetectionId cs1=ldt:abc123def456:789012345 cs2Label=Severity cs2=High'
+        },
+        {
+          id: 'sentinelone',
+          name: 'SentinelOne',
+          description: 'SentinelOne endpoint protection logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 sentinelone CEF:0|SentinelOne|Mgmt|1.0|52|Threat Detected|High|src=192.168.1.100 duser=jane.smith cs1Label=ThreatId cs1=123456789 cs2Label=Classification cs2=Malware'
+        },
+        {
+          id: 'carbon-black',
+          name: 'Carbon Black',
+          description: 'VMware Carbon Black endpoint security logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 carbonblack CEF:0|Bit9|Security Platform|8.1.4|1|Process block|8|src=192.168.1.100 duser=admin cs1Label=Policy cs1=High Security cs2Label=ProcessPath cs2=C:\\\\Windows\\\\System32\\\\calc.exe'
+        },
+        {
+          id: 'cylance',
+          name: 'Cylance',
+          description: 'BlackBerry Cylance endpoint protection logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 cylance CEF:0|Cylance|CylancePROTECT|2.1|1|Threat Quarantined|High|src=192.168.1.100 duser=user cs1Label=ThreatName cs1=Trojan.Generic cs2Label=FilePath cs2=C:\\\\Users\\\\user\\\\Downloads\\\\malware.exe'
+        }
+      ]
+    },
+    {
+      id: 'identity-access',
+      name: 'Identity & Access',
+      icon: '👤',
+      patterns: [
+        {
+          id: 'okta',
+          name: 'Okta',
+          description: 'Okta identity and access management logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 okta CEF:0|Okta|Okta|1.0|user.session.start|User Login|3|src=192.168.1.100 suser=john.doe@company.com cs1Label=Application cs1=Office365 cs2Label=Result cs2=SUCCESS'
+        },
+        {
+          id: 'azure-ad',
+          name: 'Azure Active Directory',
+          description: 'Microsoft Azure Active Directory logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 azuread CEF:0|Microsoft|Azure Active Directory|1.0|SigninLogs|User Sign-in|3|src=192.168.1.100 suser=jane.smith@company.com cs1Label=Application cs1=Microsoft Office 365 cs2Label=Status cs2=Success'
+        },
+        {
+          id: 'cyberark',
+          name: 'CyberArk',
+          description: 'CyberArk Privileged Access Security logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 cyberark CEF:0|Cyber-Ark|Vault|12.1|7|CPM_GetPassword|3|src=192.168.1.100 suser=admin cs1Label=Safe cs1=WindowsAccounts cs2Label=Account cs2=Administrator'
+        },
+        {
+          id: 'ping-identity',
+          name: 'Ping Identity',
+          description: 'Ping Identity access management logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 pingidentity CEF:0|Ping Identity|PingFederate|10.3|SAML20_SSO|SAML 2.0 SSO|3|src=192.168.1.100 suser=user@company.com cs1Label=PartnerEntityId cs1=urn:amazon:webservices cs2Label=Status cs2=success'
+        }
+      ]
+    },
+    {
+      id: 'virtualization',
+      name: 'Virtualization',
+      icon: '💻',
+      patterns: [
+        {
+          id: 'vmware-esxi',
+          name: 'VMware ESXi',
+          description: 'VMware ESXi hypervisor logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<level>[^ ]+) (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 esxi-host Hostd: info hostd[12345] [Originator@6876 sub=Default] [VpxLRO] -- BEGIN lro-3456 -- vpxapi.VpxApiLogon -- sessionManager.Login'
+        },
+        {
+          id: 'vmware-vcenter',
+          name: 'VMware vCenter',
+          description: 'VMware vCenter Server logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<level>[^ ]+) (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 vcenter-server vpxd: info vpxd[12345] [Originator@6876 sub=Default] [VpxLRO] -- BEGIN lro-7890 -- SessionManager.Login -- session[52abc123-def4-5678-9012-345678901234]'
+        },
+        {
+          id: 'hyper-v',
+          name: 'Microsoft Hyper-V',
+          description: 'Microsoft Hyper-V hypervisor logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) MSWinEventLog\\t(?<log_level>\\d+)\\t(?<log_source>[^\\t]+)\\t(?<event_id>\\d+)\\t(?<date>[^\\t]+)\\t(?<event_code>\\d+)\\t(?<source>[^\\t]+)\\t(?<user>[^\\t]+)\\t(?<sid>[^\\t]+)\\t(?<category>[^\\t]+)\\t(?<computer>[^\\t]+)\\t(?<event_type>[^\\t]+)\\t(?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 hyperv-host MSWinEventLog	1	Microsoft-Windows-Hyper-V-VMMS	18590	Oct 10 2023 13:55:36	18590	Microsoft-Windows-Hyper-V-VMMS	N/A	N/A	Information		HYPERV-HOST	Information	HYPERV-HOST	\'VM-WebServer\' was successfully created.'
+        },
+        {
+          id: 'citrix-xenserver',
+          name: 'Citrix XenServer',
+          description: 'Citrix XenServer hypervisor logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<level>[^ ]+) (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 xenserver xapi: info [Originator@6876 sub=Default] Session.login_with_password D:abc123def456 trackid=789012345 uname=root originator=xsconsole'
+        }
+      ]
+    },
+    {
+      id: 'storage-systems',
+      name: 'Storage Systems',
+      icon: '💾',
+      patterns: [
+        {
+          id: 'netapp-ontap',
+          name: 'NetApp ONTAP',
+          description: 'NetApp ONTAP storage system logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 netapp-filer kernel: RAID assimilated spare disk 1a.00.1 into /aggr0/plex0/rg0'
+        },
+        {
+          id: 'emc-unity',
+          name: 'Dell EMC Unity',
+          description: 'Dell EMC Unity storage array logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 unity-array uemcli: INFO: LUN lun_001 has been successfully created in storage pool pool_001'
+        },
+        {
+          id: 'pure-storage',
+          name: 'Pure Storage',
+          description: 'Pure Storage FlashArray logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): \\[(?<severity>[^\\]]+)\\] (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 purearray purity: [INFO] Volume vol001 created successfully with size 1TB'
+        },
+        {
+          id: 'hpe-3par',
+          name: 'HPE 3PAR',
+          description: 'HPE 3PAR storage system logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 3par-array System: Virtual volume vv001 created successfully in CPG cpg001'
+        }
+      ]
+    },
+    {
+      id: 'load-balancers',
+      name: 'Load Balancers',
+      icon: '⚖️',
+      patterns: [
+        {
+          id: 'f5-ltm',
+          name: 'F5 LTM',
+          description: 'F5 Local Traffic Manager logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<msgid>[^:]+):\\s*(?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 f5-ltm tmm[12345]: 01260013:4: SSL Handshake failed for TCP 192.168.1.100:54321 -> 10.0.0.1:443'
+        },
+        {
+          id: 'citrix-netscaler',
+          name: 'Citrix NetScaler',
+          description: 'Citrix NetScaler ADC logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<module>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 netscaler default: SSLVPN LOGIN 192.168.1.100:54321 - user john.doe : Group(s) N/A : Vserver 10.0.0.1:443 - NatIP 192.168.1.1:54321 - Browser_type "Mozilla/5.0" - SSLVPN_client_type ICA - Group_policy_name N/A'
+        },
+        {
+          id: 'a10-thunder',
+          name: 'A10 Thunder',
+          description: 'A10 Networks Thunder ADC logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 a10-thunder ACOS: [INFO] Virtual server web_vs is up'
+        },
+        {
+          id: 'kemp-loadmaster',
+          name: 'KEMP LoadMaster',
+          description: 'KEMP LoadMaster load balancer logs',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+          timeFormat: '%b %d %H:%M:%S',
+          testString: '<134>Oct 10 13:55:36 kemp-lm bal: Virtual Service 10.0.0.1:80 is UP'
+        }
+      ]
+    },
+    {
+      id: 'monitoring-tools',
+      name: 'Monitoring Tools',
+      icon: '📊',
+      patterns: [
+        {
+          id: 'nagios',
+          name: 'Nagios',
+          description: 'Nagios monitoring system logs',
+          regex: '/^\\[(?<timestamp>[^\\]]+)\\] (?<type>[^:]+): (?<message>.*)$/',
+          timeFormat: '%s',
+          testString: '[1672574400] SERVICE ALERT: web-server;HTTP;CRITICAL;HARD;3;HTTP CRITICAL - Unable to open TCP socket'
+        },
+        {
+          id: 'zabbix',
+          name: 'Zabbix',
+          description: 'Zabbix monitoring system logs',
+          regex: '/^(?<time>[^ ]+ [^ ]+) (?<pid>\\d+):(?<level>[^ ]+): (?<message>.*)$/',
+          timeFormat: '%Y%m%d:%H%M%S',
+          testString: '20230101:120000 12345:information: server #0 started [main process]'
+        },
+        {
+          id: 'prometheus',
+          name: 'Prometheus',
+          description: 'Prometheus monitoring system logs',
+          regex: '/^level=(?<level>[^ ]+) ts=(?<timestamp>[^ ]+) caller=(?<caller>[^ ]+) msg="(?<message>[^"]*)"(?<additional>.*)$/',
+          timeFormat: '',
+          testString: 'level=info ts=2023-01-01T12:00:00.123Z caller=main.go:123 msg="Server is ready to receive web requests."'
+        },
+        {
+          id: 'grafana',
+          name: 'Grafana',
+          description: 'Grafana visualization platform logs',
+          regex: '/^t=(?<timestamp>[^ ]+) lvl=(?<level>[^ ]+) msg="(?<message>[^"]*)"(?<additional>.*)$/',
+          timeFormat: '%Y-%m-%dT%H:%M:%S',
+          testString: 't=2023-01-01T12:00:00+0000 lvl=info msg="HTTP Server Listen" logger=http.server address=[::]:3000 protocol=http subUrl= socket='
+                 }
+       ]
+     },
+     {
+       id: 'enterprise-vendors',
+       name: 'Enterprise Vendors',
+       icon: '🏢',
+       patterns: [
+         {
+           id: 'microsoft-iis',
+           name: 'Microsoft IIS',
+           description: 'Microsoft Internet Information Services logs',
+           regex: '/^(?<date>[^ ]+) (?<time>[^ ]+) (?<s_ip>[^ ]+) (?<cs_method>[^ ]+) (?<cs_uri_stem>[^ ]+) (?<cs_uri_query>[^ ]+) (?<s_port>[^ ]+) (?<cs_username>[^ ]+) (?<c_ip>[^ ]+) (?<cs_user_agent>[^ ]+) (?<sc_status>[^ ]+) (?<sc_substatus>[^ ]+) (?<sc_win32_status>[^ ]+) (?<time_taken>[^ ]+)$/',
+           timeFormat: '',
+           testString: '2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0+(compatible;+MSIE+9.0;+Windows+NT+6.1) 200 0 0 1234'
+         },
+         {
+           id: 'oracle-database',
+           name: 'Oracle Database',
+           description: 'Oracle Database alert log format',
+           regex: '/^(?<timestamp>[^ ]+ [^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<message>.*)$/',
+           timeFormat: '%a %b %d %H:%M:%S %Y',
+           testString: 'Mon Jan 01 12:00:00 2023 Starting ORACLE instance (normal)'
+         },
+         {
+           id: 'sap-hana',
+           name: 'SAP HANA',
+           description: 'SAP HANA database logs',
+           regex: '/^\\[(?<pid>\\d+)\\]\\{(?<tid>\\d+)\\}\\[(?<timestamp>[^\\]]+)\\] (?<level>[^ ]+) (?<component>[^ ]+) (?<message>.*)$/',
+           timeFormat: '%Y-%m-%d %H:%M:%S',
+           testString: '[12345]{67890}[2023-01-01 12:00:00.123] i TraceContext TraceContext.cpp(00123) : Starting trace context'
+         },
+         {
+           id: 'ibm-db2',
+           name: 'IBM DB2',
+           description: 'IBM DB2 database logs',
+           regex: '/^(?<timestamp>[^ ]+ [^ ]+) (?<instance>[^ ]+) (?<level>[^ ]+) (?<component>[^ ]+) (?<message>.*)$/',
+           timeFormat: '%Y-%m-%d-%H.%M.%S',
+           testString: '2023-01-01-12.00.00.123456 INSTANCE0 LEVEL-INFO DB2START : DB2 instance started successfully'
+         },
+         {
+           id: 'salesforce',
+           name: 'Salesforce',
+           description: 'Salesforce event monitoring logs',
+           regex: '/^"(?<event_type>[^"]+)","(?<timestamp>[^"]+)","(?<user_id>[^"]+)","(?<username>[^"]+)","(?<event_date>[^"]+)","(?<source_ip>[^"]+)"(?<additional>.*)$/',
+           timeFormat: '%Y%m%d%H%M%S',
+           testString: '"Login","20230101120000","005xx0000012345","user@company.com","2023-01-01","192.168.1.100","SUCCESS"'
+         }
+       ]
+     },
+     {
+       id: 'network-infrastructure',
+       name: 'Network Infrastructure',
+       icon: '🌐',
+       patterns: [
+         {
+           id: 'arista-eos',
+           name: 'Arista EOS',
+           description: 'Arista Networks EOS switch logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<189>Oct 10 13:55:36 arista-switch Stp: %STP-6-TOPOLOGY_CHANGE: Topology change detected on port Ethernet1/1'
+         },
+         {
+           id: 'brocade-fabric',
+           name: 'Brocade Fabric OS',
+           description: 'Brocade Fibre Channel switch logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<event>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 brocade-fc ZONE-1001: Zone configuration change detected'
+         },
+         {
+           id: 'ubiquiti-unifi',
+           name: 'Ubiquiti UniFi',
+           description: 'Ubiquiti UniFi network device logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 unifi-ap hostapd: wlan0: STA 00:11:22:33:44:55 IEEE 802.11: authenticated'
+         },
+         {
+           id: 'mikrotik-routeros',
+           name: 'MikroTik RouterOS',
+           description: 'MikroTik RouterOS logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<topic>[^,]+),(?<severity>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 mikrotik-router firewall,info: input: in:ether1 out:(unknown 0), src-mac 00:11:22:33:44:55, proto TCP (SYN), 192.168.1.100:54321->10.0.0.1:80, len 60'
+         },
+         {
+           id: 'ruckus-wireless',
+           name: 'Ruckus Wireless',
+           description: 'Ruckus wireless controller logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^:]+): (?<component>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 ruckus-controller wlan: AP[00:11:22:33:44:55]: Station 00:aa:bb:cc:dd:ee associated to WLAN "Corporate"'
+         }
+       ]
+     },
+     {
+       id: 'backup-recovery',
+       name: 'Backup & Recovery',
+       icon: '💿',
+       patterns: [
+         {
+           id: 'veeam-backup',
+           name: 'Veeam Backup',
+           description: 'Veeam Backup & Replication logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 veeam-server CEF:0|Veeam|Backup & Replication|11.0|100|Job completed|3|src=192.168.1.100 cs1Label=JobName cs1=VM-Backup-Daily cs2Label=Status cs2=Success'
+         },
+         {
+           id: 'commvault',
+           name: 'Commvault',
+           description: 'Commvault backup solution logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 commvault CEF:0|Commvault|Complete Backup & Recovery|11.24|1001|Backup Job Completed|3|src=192.168.1.100 cs1Label=ClientName cs1=DB-Server cs2Label=JobStatus cs2=Completed'
+         },
+         {
+           id: 'cohesity-backup',
+           name: 'Cohesity',
+           description: 'Cohesity data protection platform logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 cohesity CEF:0|Cohesity|DataPlatform|6.8|2001|Protection Job Success|3|src=192.168.1.100 cs1Label=JobName cs1=VM-Protection cs2Label=ObjectsProcessed cs2=25'
+         },
+         {
+           id: 'rubrik',
+           name: 'Rubrik',
+           description: 'Rubrik cloud data management logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 rubrik CEF:0|Rubrik|Cloud Data Management|8.1|3001|Snapshot Taken|3|src=192.168.1.100 cs1Label=ObjectName cs1=SQL-Database cs2Label=SnapshotId cs2=snapshot_123456'
+         }
+       ]
+     },
+     {
+       id: 'email-security',
+       name: 'Email Security',
+       icon: '📧',
+       patterns: [
+         {
+           id: 'proofpoint-tap',
+           name: 'Proofpoint TAP',
+           description: 'Proofpoint Targeted Attack Protection logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 proofpoint CEF:0|Proofpoint|TAP|2.8|1001|Message Blocked|High|src=192.168.1.100 cs1Label=Threat cs1=Malicious URL cs2Label=Recipient cs2=user@company.com'
+         },
+         {
+           id: 'mimecast',
+           name: 'Mimecast',
+           description: 'Mimecast email security logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 mimecast CEF:0|Mimecast|Email Security|1.0|2001|Spam Detected|Medium|src=192.168.1.100 cs1Label=Subject cs1=Suspicious Email cs2Label=Action cs2=Quarantined'
+         },
+         {
+           id: 'barracuda-ess',
+           name: 'Barracuda ESS',
+           description: 'Barracuda Email Security Service logs',
+           regex: '/^(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<level>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %Y %H:%M:%S',
+           testString: 'Oct 10 2023 13:55:36 barracuda-ess INFO: Message from sender@external.com to recipient@company.com was quarantined due to spam detection'
+         },
+         {
+           id: 'microsoft-defender',
+           name: 'Microsoft Defender',
+           description: 'Microsoft Defender for Office 365 logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 defender CEF:0|Microsoft|Defender for Office 365|1.0|4001|Safe Attachments Detection|High|src=192.168.1.100 cs1Label=ThreatType cs1=Malware cs2Label=FileName cs2=document.pdf'
+         }
+       ]
+     },
+     {
+       id: 'iot-industrial',
+       name: 'IoT & Industrial',
+       icon: '🏭',
+       patterns: [
+         {
+           id: 'schneider-electric',
+           name: 'Schneider Electric',
+           description: 'Schneider Electric industrial control systems',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 schneider-plc ModbusServer: Connection established from 192.168.1.100:502'
+         },
+         {
+           id: 'siemens-scada',
+           name: 'Siemens SCADA',
+           description: 'Siemens SCADA system logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 siemens-hmi WinCC: Alarm - Temperature sensor reading exceeded threshold: 85°C'
+         },
+         {
+           id: 'ge-digital',
+           name: 'GE Digital',
+           description: 'GE Digital Predix platform logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 ge-predix AssetMonitor: Vibration anomaly detected on turbine unit TU-001'
+         },
+         {
+           id: 'honeywell-dcs',
+           name: 'Honeywell DCS',
+           description: 'Honeywell Distributed Control System logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<component>[^:]+): (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 honeywell-dcs ProcessControl: Setpoint change detected on loop LC-101: 45.2% -> 50.0%'
+         }
+       ]
+     },
+     {
+       id: 'specialized-systems',
+       name: 'Specialized Systems',
+       icon: '⚙️',
+       patterns: [
+         {
+           id: 'dns-bind',
+           name: 'ISC BIND DNS',
+           description: 'ISC BIND DNS server logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 dns-server named[12345]: client 192.168.1.100#54321 (example.com): query: example.com IN A + (192.168.1.1)'
+         },
+         {
+           id: 'ntp-server',
+           name: 'NTP Server',
+           description: 'Network Time Protocol server logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 ntp-server ntpd[12345]: synchronized to 192.168.1.1, stratum 2'
+         },
+         {
+           id: 'radius-server',
+           name: 'RADIUS Server',
+           description: 'RADIUS authentication server logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 radius-server radiusd[12345]: Login OK: [john.doe] (from client 192.168.1.100 port 1812)'
+         },
+         {
+           id: 'ldap-server',
+           name: 'LDAP Server',
+           description: 'LDAP directory server logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<message>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 ldap-server slapd[12345]: conn=1234 op=5 BIND dn="cn=john.doe,ou=users,dc=company,dc=com" method=128'
+         },
+         {
+           id: 'git-server',
+           name: 'Git Server',
+           description: 'Git version control server logs',
+           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) CEF:(?<version>[^|]+)\\|(?<vendor>[^|]+)\\|(?<product>[^|]+)\\|(?<product_version>[^|]+)\\|(?<event_id>[^|]+)\\|(?<event_name>[^|]+)\\|(?<severity>[^|]+)\\|(?<extension>.*)$/',
+           timeFormat: '%b %d %H:%M:%S',
+           testString: '<134>Oct 10 13:55:36 git-server CEF:0|GitHub|Enterprise Server|3.8|5001|Repository Push|3|src=192.168.1.100 suser=john.doe cs1Label=Repository cs1=company/webapp cs2Label=Branch cs2=main'
+         }
+       ]
+     }
+   ];
 
   // VSCode-style input styling
   const vscodeInputStyle = {
@@ -338,7 +1011,7 @@ const ParserTester: React.FC = () => {
             📚 Parser Library
           </h2>
           
-          {patternLibrary.map((category) => (
+          {parserLibrary.map((category) => (
             <div key={category.id} style={{ marginBottom: '0.5rem' }}>
               {/* Category Header */}
               <button
