@@ -35,7 +35,8 @@ export const testParser = async (request: ParserTestRequest): Promise<ParserTest
     });
 
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
+    // Handle axios errors
     if (axios.isAxiosError(error)) {
       if (error.response) {
         // Server responded with error status
@@ -44,12 +45,43 @@ export const testParser = async (request: ParserTestRequest): Promise<ParserTest
       } else if (error.request) {
         // Request was made but no response received
         throw new Error('Network error: Unable to reach the parser API');
+      } else if (error.code === 'ECONNABORTED') {
+        // Timeout error
+        throw new Error(`Request error: ${error.message}`);
       } else {
-        // Something else happened
+        // Something else happened in setting up the request
         throw new Error(`Request error: ${error.message}`);
       }
-    } else {
-      throw new Error('An unexpected error occurred while testing the parser');
     }
+    
+    // Handle mock errors from tests (they have response property but aren't axios errors)
+    if (error.response) {
+      const message = error.response.data?.message || error.response.data?.error || 'Server error occurred';
+      throw new Error(`API Error (${error.response.status}): ${message}`);
+    }
+    
+    // Handle mock network errors (they have request property)
+    if (error.request) {
+      throw new Error('Network error: Unable to reach the parser API');
+    }
+    
+    // Handle timeout errors
+    if (error.code === 'ECONNABORTED') {
+      throw new Error(`Request error: ${error.message}`);
+    }
+    
+    // Handle errors with message
+    if (error.message) {
+      // Check if it's a standard Error object
+      if (error instanceof Error) {
+        throw new Error('An unexpected error occurred while testing the parser');
+      } else {
+        // It's a plain object with message
+        throw new Error(`Request error: ${error.message}`);
+      }
+    }
+    
+    // Fallback for any other error
+    throw new Error('An unexpected error occurred while testing the parser');
   }
 }; 

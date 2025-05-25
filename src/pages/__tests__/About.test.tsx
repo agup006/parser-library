@@ -23,15 +23,27 @@ describe('About Page', () => {
 
   it('displays the project description', () => {
     renderWithProviders(<About />);
-    expect(screen.getByText(/This project is designed to provide a robust foundation/i)).toBeInTheDocument();
+    expect(screen.getByText(/A comprehensive tool for testing and validating Fluent Bit regex parsers/i)).toBeInTheDocument();
   });
 
   it('shows the features list', () => {
     renderWithProviders(<About />);
-    expect(screen.getByText(/Type-safe development with TypeScript/i)).toBeInTheDocument();
-    expect(screen.getByText(/Efficient state management with Redux Toolkit/i)).toBeInTheDocument();
-    expect(screen.getByText(/Modern UI components with Tailwind CSS/i)).toBeInTheDocument();
-    expect(screen.getByText(/Accessible components with Headless UI/i)).toBeInTheDocument();
-    expect(screen.getByText(/Fast development with Vite/i)).toBeInTheDocument();
+    expect(screen.getByText(/Onigmo Regex Engine/i)).toBeInTheDocument();
+    expect(screen.getByText(/Real-time Validation/i)).toBeInTheDocument();
+    expect(screen.getByText(/Time Format Support/i)).toBeInTheDocument();
+    expect(screen.getByText(/Interactive Testing/i)).toBeInTheDocument();
+  });
+
+  it('displays the mission statement', () => {
+    renderWithProviders(<About />);
+    expect(screen.getByText(/Our Mission/i)).toBeInTheDocument();
+    expect(screen.getByText(/We believe that log parsing shouldn't be a guessing game/i)).toBeInTheDocument();
+  });
+
+  it('shows technical foundation section', () => {
+    renderWithProviders(<About />);
+    expect(screen.getByText(/Technical Foundation/i)).toBeInTheDocument();
+    expect(screen.getByText(/React 18 with TypeScript for type-safe development/i)).toBeInTheDocument();
+    expect(screen.getByText(/Redux Toolkit for efficient state management/i)).toBeInTheDocument();
   });
 }); 
