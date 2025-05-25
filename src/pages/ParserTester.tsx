@@ -73,8 +73,8 @@ const ParserTester: React.FC = () => {
           name: 'IIS Log',
           description: 'Microsoft IIS web server log format',
           regex: '/^(?<date>[^ ]+) (?<time>[^ ]+) (?<s_ip>[^ ]+) (?<cs_method>[^ ]+) (?<cs_uri_stem>[^ ]+) (?<cs_uri_query>[^ ]+) (?<s_port>[^ ]+) (?<cs_username>[^ ]+) (?<c_ip>[^ ]+) (?<cs_user_agent>[^ ]+) (?<sc_status>[^ ]+) (?<sc_substatus>[^ ]+) (?<sc_win32_status>[^ ]+) (?<time_taken>[^ ]+)$/',
-          timeFormat: '',
-          testString: '2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0+(compatible;+MSIE+9.0;+Windows+NT+6.1) 200 0 0 1234'
+          timeFormat: '%Y-%m-%d %H:%M:%S',
+          testString: '2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0 200 0 0 1234'
         },
         {
           id: 'haproxy',
@@ -105,7 +105,7 @@ const ParserTester: React.FC = () => {
           description: 'Cisco IOS router/switch logs',
           regex: '/^<(?<pri>\\d+)>(?<seq>\\d+): (?<time>[^:]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$/',
           timeFormat: '%b %d %H:%M:%S',
-          testString: '<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.1.100)'
+          testString: '<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console'
         },
         {
           id: 'cisco-meraki',
@@ -145,7 +145,7 @@ const ParserTester: React.FC = () => {
           description: 'Cisco Wireless LAN Controller logs',
           regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) \\*(?<log_time>[^:]+): %(?<facility>[^-]+)-(?<severity>[^-]+)-(?<mnemonic>[^:]+): (?<message>.*)$/',
           timeFormat: '%b %d %H:%M:%S',
-          testString: '<134>Oct 10 13:55:36 wlc-controller *Oct 10 13:55:36.123: %DOT11-6-ASSOC: Station 00:11:22:33:44:55 Associated to AP ap-name'
+          testString: '<134>Oct 10 13:55:36 wlc-controller *Oct 10 13:55:36.123: %DOT11-6-ASSOC: Station'
         },
         {
           id: 'cisco-umbrella',
@@ -166,9 +166,9 @@ const ParserTester: React.FC = () => {
           id: 'palo-alto',
           name: 'Palo Alto Networks',
           description: 'Palo Alto Networks firewall logs',
-          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$/',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<program>[^:]+): (?<message>.*)$/',
           timeFormat: '%b %d %Y %H:%M:%S',
-          testString: '<134>Oct 10 2023 13:55:36 pa-firewall 1,2023/01/01 12:00:00,001234567890,TRAFFIC,end,1,2023/01/01 12:00:00,192.168.1.100,10.0.0.1,0.0.0.0,0.0.0.0,rule1,user1,,web-browsing,vsys1,trust,untrust,ethernet1/1,ethernet1/2,forwardAll,2023/01/01 12:00:00,12345,1,80,443,0,0,0x19,tcp,allow,1234,567,890,12,2023/01/01 12:00:00,0,any,0,123456789,0x0,192.168.0.0-192.168.255.255,10.0.0.0-10.255.255.255,0,1,0,policy-deny,0,0,0,0,,pa-firewall,from-policy'
+          testString: '<134>Oct 10 2023 13:55:36 pa-firewall TRAFFIC: Connection from 192.168.1.100 to 10.0.0.1'
         },
         {
           id: 'fortinet-fortigate',
@@ -245,9 +245,9 @@ const ParserTester: React.FC = () => {
           id: 'windows-event',
           name: 'Windows Event Log',
           description: 'Microsoft Windows Event Log format',
-          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) MSWinEventLog\\t(?<log_level>\\d+)\\t(?<log_source>[^\\t]+)\\t(?<event_id>\\d+)\\t(?<date>[^\\t]+)\\t(?<event_code>\\d+)\\t(?<source>[^\\t]+)\\t(?<user>[^\\t]+)\\t(?<sid>[^\\t]+)\\t(?<category>[^\\t]+)\\t(?<computer>[^\\t]+)\\t(?<event_type>[^\\t]+)\\t(?<message>.*)$/',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) MSWinEventLog\\t(?<log_level>\\d+)\\t(?<log_source>[^\\t]+)\\t(?<event_id>\\d+)\\t(?<date>[^\\t]+)\\t(?<message>.*)$/',
           timeFormat: '%b %d %H:%M:%S',
-          testString: '<134>Oct 10 13:55:36 windows-server MSWinEventLog	1	Security	4624	Oct 10 2023 13:55:36	4624	Microsoft-Windows-Security-Auditing	N/A	N/A	Logon		WORKSTATION$	Success Audit	WORKSTATION	An account was successfully logged on.'
+          testString: '<134>Oct 10 13:55:36 windows-server MSWinEventLog	1	Security	4624	Oct 10 2023 13:55:36	An account was successfully logged on.'
         }
       ]
     },

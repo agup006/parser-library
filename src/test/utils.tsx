@@ -2,11 +2,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { store } from '../store';
 import type { ParserTestResponse } from '../services/parserApi';
 
-// Create a test slice for testing
+// Create a test slice for testing - exported for potential future use
 const testAppSlice = createSlice({
   name: 'app',
   initialState: {
@@ -22,6 +22,9 @@ const testAppSlice = createSlice({
     },
   },
 });
+
+// Export for potential future use
+export const testActions = testAppSlice.actions;
 
 // Create a custom render function that includes providers
 export const renderWithProviders = (
