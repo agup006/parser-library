@@ -1,0 +1,286 @@
+{
+  "timestamp": "2025-05-25T06:00:20.306Z",
+  "summary": {
+    "total": 13,
+    "successful": 11,
+    "failed": 2,
+    "successRate": "84.6"
+  },
+  "results": [
+    {
+      "success": true,
+      "pattern": {
+        "id": "apache-common",
+        "name": "Apache Common Log",
+        "description": "Standard Apache access log format",
+        "regex": "/^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \\[(?<time>[^\\]]*)\\] \"(?<method>\\S+)(?: +(?<path>[^ ]*) +\\S*)?\" (?<code>[^ ]*) (?<size>[^ ]*)$/",
+        "timeFormat": "%d/%b/%Y:%H:%M:%S %z",
+        "testString": "127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] \"GET /apache_pb.gif HTTP/1.0\" 200 2326"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "host": "127.0.0.1",
+          "user": "frank",
+          "method": "GET",
+          "path": "/apache_pb.gif",
+          "code": "200",
+          "size": "2326"
+        },
+        "parsed_time": "2000/10/10 20:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "apache-combined",
+        "name": "Apache Combined Log",
+        "description": "Apache access log with referer and user agent",
+        "regex": "/^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \\[(?<time>[^\\]]*)\\] \"(?<method>\\S+)(?: +(?<path>[^ ]*) +\\S*)?\" (?<code>[^ ]*) (?<size>[^ ]*)(?: \"(?<referer>[^\\\"]*)\" \"(?<agent>.*)\")?$/",
+        "timeFormat": "%d/%b/%Y:%H:%M:%S %z",
+        "testString": "127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] \"GET /apache_pb.gif HTTP/1.0\" 200 2326 \"http://www.example.com/start.html\" \"Mozilla/4.08 [en] (Win98; I ;Nav)\""
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "host": "127.0.0.1",
+          "user": "frank",
+          "method": "GET",
+          "path": "/apache_pb.gif",
+          "code": "200",
+          "size": "2326",
+          "referer": "http://www.example.com/start.html",
+          "agent": "Mozilla/4.08 [en] (Win98; I ;Nav)"
+        },
+        "parsed_time": "2000/10/10 20:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "nginx-access",
+        "name": "Nginx Access Log",
+        "description": "Standard Nginx access log format",
+        "regex": "/^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \\[(?<time>[^\\]]*)\\] \"(?<method>\\S+)(?: +(?<path>[^\"]*?)(?: +\\S*)?)?\" (?<code>[^ ]*) (?<size>[^ ]*)(?: \"(?<referer>[^\"]*)\" \"(?<agent>[^\"]*)\")?$/",
+        "timeFormat": "%d/%b/%Y:%H:%M:%S %z",
+        "testString": "192.168.1.1 example.com user [10/Oct/2000:13:55:36 -0700] \"GET /index.html HTTP/1.1\" 200 1234 \"http://example.com\" \"Mozilla/5.0\""
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "remote": "192.168.1.1",
+          "host": "example.com",
+          "user": "user",
+          "method": "GET",
+          "path": "/index.html",
+          "code": "200",
+          "size": "1234",
+          "referer": "http://example.com",
+          "agent": "Mozilla/5.0"
+        },
+        "parsed_time": "2000/10/10 20:55:36 +0000"
+      }
+    },
+    {
+      "success": false,
+      "pattern": {
+        "id": "iis-log",
+        "name": "IIS Log",
+        "description": "Microsoft IIS web server log format",
+        "regex": "/^(?<date>[^ ]+) (?<time>[^ ]+) (?<s_ip>[^ ]+) (?<cs_method>[^ ]+) (?<cs_uri_stem>[^ ]+) (?<cs_uri_query>[^ ]+) (?<s_port>[^ ]+) (?<cs_username>[^ ]+) (?<c_ip>[^ ]+) (?<cs_user_agent>[^ ]+) (?<sc_status>[^ ]+) (?<sc_substatus>[^ ]+) (?<sc_win32_status>[^ ]+) (?<time_taken>[^ ]+)$/",
+        "timeFormat": "%Y-%m-%d %H:%M:%S",
+        "testString": "2023-01-01 12:00:00 192.168.1.1 GET /default.htm - 80 - 10.0.0.1 Mozilla/5.0+(compatible;+MSIE+9.0;+Windows+NT+6.1) 200 0 0 1234"
+      },
+      "error": "No fields extracted",
+      "result": {
+        "errors": [
+          "invalid time format: value = 12:00:00, error_class = ArgumentError, error = string doesn't match",
+          "Fluent::Plugin::Parser::ParserError"
+        ],
+        "parsed": {},
+        "parsed_time": {}
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "haproxy",
+        "name": "HAProxy",
+        "description": "HAProxy load balancer log format",
+        "regex": "/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<client_ip>[^:]+):(?<client_port>\\d+) \\[(?<accept_date>[^\\]]+)\\] (?<frontend_name>[^ ]+) (?<backend_name>[^ ]+) (?<status_code>\\d+) (?<bytes_read>\\d+) (?<request>.*)$/",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<134>Oct 10 13:55:36 loadbalancer haproxy[1234]: 192.168.1.100:54321 [10/Oct/2000:13:55:36.123] frontend backend 200 1234 \"GET /api/health HTTP/1.1\""
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "134",
+          "hostname": "loadbalancer",
+          "process": "haproxy",
+          "pid": "1234",
+          "client_ip": "192.168.1.100",
+          "client_port": "54321",
+          "accept_date": "10/Oct/2000:13:55:36.123",
+          "frontend_name": "frontend",
+          "backend_name": "backend",
+          "status_code": "200",
+          "bytes_read": "1234",
+          "request": "\"GET /api/health HTTP/1.1\""
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "cisco-asa",
+        "name": "Cisco ASA",
+        "description": "Cisco Adaptive Security Appliance logs",
+        "regex": "/^%ASA-(?<pri>\\d+)-(?<id>\\d+):\\s+(?<message>.*)$/",
+        "timeFormat": "%b %d %Y %H:%M:%S",
+        "testString": "%ASA-6-302013: Built inbound TCP connection 12345 for outside:192.168.1.100/1234 (192.168.1.100/1234) to inside:10.0.0.1/80 (10.0.0.1/80)"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pri": "6",
+          "id": "302013",
+          "message": "Built inbound TCP connection 12345 for outside:192.168.1.100/1234 (192.168.1.100/1234) to inside:10.0.0.1/80 (10.0.0.1/80)"
+        },
+        "parsed_time": "2025/05/25 06:00:14 +0000"
+      }
+    },
+    {
+      "success": false,
+      "pattern": {
+        "id": "cisco-ios",
+        "name": "Cisco IOS",
+        "description": "Cisco IOS router/switch logs",
+        "regex": "/^<(?<pri>\\d+)>(?<seq>\\d+): (?<time>[^:]+): %(?<facility>[^-]+)-(?<severity>\\d+)-(?<mnemonic>[^:]+): (?<message>.*)$/",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "<189>123: Oct 10 13:55:36: %SYS-5-CONFIG_I: Configured from console by admin on vty0 (192.168.1.100)"
+      },
+      "error": "Request failed with status code 500"
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "syslog",
+        "name": "Standard Syslog",
+        "description": "RFC3164 syslog format",
+        "regex": "/^(?<time>[^ ]* [^ ]* [^ ]*) (?<host>[^ ]*) (?<ident>[a-zA-Z0-9_\\/\\.\\-]*)(?:\\[(?<pid>[0-9]+)\\])?(?:[^\\:]*\\:)? *(?<message>.*)$/",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "Oct 10 13:55:36 myhost sshd[1234]: Failed password for invalid user admin from 192.168.1.100 port 22 ssh2"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "host": "myhost",
+          "ident": "sshd",
+          "pid": "1234",
+          "message": "Failed password for invalid user admin from 192.168.1.100 port 22 ssh2"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "auth-log",
+        "name": "Auth.log",
+        "description": "Linux authentication log format",
+        "regex": "/^(?<time>[^ ]* [^ ]* [^ ]*) (?<host>[^ ]*) (?<service>[^\\[]*)(\\[(?<pid>[0-9]+)\\])?: (?<message>.*)$/",
+        "timeFormat": "%b %d %H:%M:%S",
+        "testString": "Oct 10 13:55:36 server sudo[12345]: user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/bin/ls"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "host": "server",
+          "service": "sudo",
+          "pid": "12345",
+          "message": "user : TTY=pts/0 ; PWD=/home/user ; USER=root ; COMMAND=/bin/ls"
+        },
+        "parsed_time": "2025/10/10 13:55:36 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "json-log",
+        "name": "JSON Structured",
+        "description": "Structured JSON application logs",
+        "regex": "/^(?<log>.*)$/",
+        "timeFormat": "",
+        "testString": "{\"timestamp\":\"2023-01-01T12:00:00Z\",\"level\":\"INFO\",\"message\":\"Application started\",\"service\":\"web-server\",\"request_id\":\"abc123\"}"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "log": "{\"timestamp\":\"2023-01-01T12:00:00Z\",\"level\":\"INFO\",\"message\":\"Application started\",\"service\":\"web-server\",\"request_id\":\"abc123\"}"
+        },
+        "parsed_time": "2025/05/25 06:00:17 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "docker-log",
+        "name": "Docker Container",
+        "description": "Docker container log format",
+        "regex": "/^(?<time>[^ ]+) (?<container_id>[^ ]+) (?<container_name>[^ ]+): (?<message>.*)$/",
+        "timeFormat": "%Y-%m-%dT%H:%M:%S",
+        "testString": "2023-01-01T12:00:00.123456Z a1b2c3d4e5f6 web-server: Starting application on port 8080"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "container_id": "a1b2c3d4e5f6",
+          "container_name": "web-server",
+          "message": "Starting application on port 8080"
+        },
+        "parsed_time": "2023/01/01 12:00:00 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "mysql-error",
+        "name": "MySQL Error Log",
+        "description": "MySQL database error log format",
+        "regex": "/^(?<time>[^ ]* [^ ]*) (?<thread_id>[^ ]*) \\[(?<level>[^\\]]+)\\] (?<message>.*)$/",
+        "timeFormat": "%Y-%m-%d %H:%M:%S",
+        "testString": "2023-01-01 12:00:00 123 [ERROR] Access denied for user 'root'@'localhost' (using password: YES)"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "thread_id": "123",
+          "level": "ERROR",
+          "message": "Access denied for user 'root'@'localhost' (using password: YES)"
+        },
+        "parsed_time": "2023/01/01 12:00:00 +0000"
+      }
+    },
+    {
+      "success": true,
+      "pattern": {
+        "id": "postgresql-log",
+        "name": "PostgreSQL Log",
+        "description": "PostgreSQL database log format",
+        "regex": "/^(?<time>[^ ]* [^ ]*) \\[(?<pid>[0-9]+)\\] (?<level>[^:]*): (?<message>.*)$/",
+        "timeFormat": "%Y-%m-%d %H:%M:%S",
+        "testString": "2023-01-01 12:00:00 [1234] ERROR: relation \"users\" does not exist at character 15"
+      },
+      "result": {
+        "errors": [],
+        "parsed": {
+          "pid": "1234",
+          "level": "ERROR",
+          "message": "relation \"users\" does not exist at character 15"
+        },
+        "parsed_time": "2023/01/01 12:00:00 +0000"
+      }
+    }
+  ]
+}

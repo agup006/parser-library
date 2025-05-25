@@ -80,9 +80,9 @@ const ParserTester: React.FC = () => {
           id: 'haproxy',
           name: 'HAProxy',
           description: 'HAProxy load balancer log format',
-          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<client_ip>[^:]+):(?<client_port>\\d+) \\[(?<accept_date>[^\\]]+)\\] (?<frontend_name>[^ ]+) (?<backend_name>[^ ]+) (?<timers>[^ ]+) (?<status_code>\\d+) (?<bytes_read>\\d+) (?<captured_request_cookie>[^ ]+) (?<captured_response_cookie>[^ ]+) (?<termination_state>[^ ]+) (?<actconn>[^ ]+) (?<request>[^\"]*)$/',
+          regex: '/^<(?<pri>\\d+)>(?<time>[^ ]+ [^ ]+ [^ ]+) (?<hostname>[^ ]+) (?<process>[^\\[]+)\\[(?<pid>\\d+)\\]: (?<client_ip>[^:]+):(?<client_port>\\d+) \\[(?<accept_date>[^\\]]+)\\] (?<frontend_name>[^ ]+) (?<backend_name>[^ ]+) (?<status_code>\\d+) (?<bytes_read>\\d+) (?<request>.*)$/',
           timeFormat: '%b %d %H:%M:%S',
-          testString: '<134>Oct 10 13:55:36 loadbalancer haproxy[1234]: 192.168.1.100:54321 [10/Oct/2000:13:55:36.123] frontend backend 0/0/1/2/3 200 1234 - - ---- 1/1/1/1/0 0/0 "GET /api/health HTTP/1.1"'
+          testString: '<134>Oct 10 13:55:36 loadbalancer haproxy[1234]: 192.168.1.100:54321 [10/Oct/2000:13:55:36.123] frontend backend 200 1234 "GET /api/health HTTP/1.1"'
         }
       ]
     },
