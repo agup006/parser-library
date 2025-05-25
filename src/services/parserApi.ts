@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://core.calyptia.com/api';
+// Use local proxy to avoid CORS issues
+const API_BASE_URL = '/api';
 
 export interface ParserTestRequest {
   regex: string;
